@@ -6,6 +6,13 @@ First, run the development server:
 
 ```bash
 npm run dev
+
+AUTH_SECRET="TClhI3WLptNFJ4c0K2pXkazmB+6HJh0jTXPPWhUZ7a4=" # Added by `npx auth`. Read more: https://cli.authjs.dev
+AUTH_GITHUB_ID="Ov23liMQ9JYA4FqeMoDI"
+AUTH_GITHUB_SECRET="8f35269813c8222e25604e0471ac638abbae17bf"
+NEXT_PUBLIC_SANITY_PROJECT_ID="n108tp7q"
+NEXT_PUBLIC_SANITY_DATASET="production"
+
 # or
 yarn dev
 # or
@@ -34,4 +41,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
 # portfolio-new
