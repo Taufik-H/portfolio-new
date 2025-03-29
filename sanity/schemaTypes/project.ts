@@ -7,16 +7,16 @@ export const project = defineType({
 
   fields: [
     defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+    }),
+    defineField({
       name: "slug",
       type: "slug",
       options: {
         source: "title",
       },
-    }),
-    defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
     }),
     defineField({
       name: "author",

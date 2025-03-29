@@ -4,7 +4,7 @@ import "./globals.css";
 import ClickEffect from "@/components/ui/click-effect";
 import { ThemeProvider } from "@/components/theme-provider";
 import "easymde/dist/easymde.min.css";
-const fredoka = Fredoka({
+export const fredoka = Fredoka({
   subsets: ["latin"],
 });
 export const metadata: Metadata = {

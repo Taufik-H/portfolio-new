@@ -1,13 +1,13 @@
-"use client";
 import { cn, formatDate } from "@/lib/utils";
-import React, { useEffect, useState } from "react";
 import { buttonVariants } from "./ui/button";
 import { EyeIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import { Author, Project } from "@/sanity/types";
+
+export type ProjectCardType = Omit<Project, "author"> & { author?: Author };
 
 const ProjectCard = ({ post }: { post: ProjectCardType }) => {
-  const [isNew, setisNew] = useState(false);
   const {
     _createdAt,
     author,
@@ -17,25 +17,26 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
     image,
     description,
     _id,
+    slug,
   } = post;
 
-  const defineNewProduct = (_createdAt: Date) => {
+  //determine if the product is new (created within the last 7 days)
+  const defineNewProduct = (_createdAt: string | Date) => {
+    const createdAt = new Date(_createdAt);
     const currentDate = new Date();
-    const diffTime = Math.abs(currentDate.getTime() - _createdAt.getTime());
+    const diffTime = Math.abs(currentDate.getTime() - createdAt.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays < 7;
   };
 
-  useEffect(() => {
-    setisNew(defineNewProduct(_createdAt));
-  }, [_createdAt]);
+  const isNew = defineNewProduct(_createdAt);
 
   return (
-    <li className=" rounded-2xl border-2 border-r-3 border-b-6 p-2 transition-all duration-300 ease-in-out hover:bg-amber-500/10 hover:border-amber-500/20 group">
+    <li className="rounded-2xl border-2 border-r-3 border-b-6 p-3 transition-all duration-300 ease-in-out hover:bg-amber-500/10 hover:border-amber-500/20 group">
       <div className="flex justify-between items-center mb-2">
-        <div className="flex gap-2  items-center">
+        <div className="flex gap-2 items-center">
           <Link
-            href={`/?query=${category.toLowerCase()}`}
+            href={`/?query=${category?.toLowerCase()}`}
             className={cn(
               buttonVariants({ variant: "outline", size: "sm" }),
               "rounded-full bg-transparent hover:bg-transparent"
@@ -74,7 +75,9 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
         </div>
       </Link>
       <Link href={`/project/${_id}`}>
-        <p className="text-3xl font-bold capitalize">{title}</p>
+        <p className="text-2xl font-semibold capitalize my-2 line-clamp-1">
+          {title}
+        </p>
       </Link>
       <div className="flex gap-1 items-center">
         <Link href={`/user/${author?._id}`}>
@@ -90,7 +93,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
         </Link>
 
         <p className="text-neutral-500 font-semibold text-xs">
-          {formatDate(_createdAt)}
+          {formatDate(new Date(_createdAt))}
         </p>
       </div>
       <Link href={`/project/${_id}`}>
@@ -99,7 +102,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
         </p>
       </Link>
       <Link
-        href={`/project/${_id}`}
+        href={`/project/${slug?.current}`}
         className={cn(
           buttonVariants({ variant: "amber" }),
           "w-full rounded-lg"
