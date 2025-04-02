@@ -122,6 +122,13 @@
 
 @layer components {
   .section-container {
-    @apply lg:px-20 md:px-10 px-5;
+    @apply px-5 max-w-7xl mx-auto;
+  }
+
+  .brutalism-border {
+    @apply !border-4 !border-black !rounded-lg !p-3 !min-h-14 !text-lg !shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+  }
+  .pressable {
+    @apply !transition-all focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!translate-y-1 focus-visible:!translate-x-1 focus-visible:!shadow-none focus-visible:!border-2;
   }
 }

@@ -12,8 +12,6 @@ import { fredoka } from "@/app/layout";
 import { Skeleton } from "@/components/ui/skeleton";
 import PostView from "@/components/post-view";
 
-export const experimental_ppr = true;
-
 const ProjectPage = async ({
   params,
 }: {
@@ -27,7 +25,7 @@ const ProjectPage = async ({
   const parsedContent = md.render(post.pitch || "");
 
   return (
-    <div className="max-w-3xl mx-auto ">
+    <div>
       <div className="mt-15">
         <p
           className={cn(

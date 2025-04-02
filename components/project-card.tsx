@@ -65,7 +65,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           </p>
         )}
       </div>
-      <Link href={`/project/${_id}`}>
+      <Link href={`/project/${slug?.current}`}>
         <div className="w-full h-50 rounded-xl overflow-hidden">
           <img
             src={image}
@@ -74,7 +74,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           />
         </div>
       </Link>
-      <Link href={`/project/${_id}`}>
+      <Link href={`/project/${slug?.current}`}>
         <p className="text-2xl font-semibold capitalize my-2 line-clamp-1">
           {title}
         </p>
@@ -96,7 +96,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           {formatDate(new Date(_createdAt))}
         </p>
       </div>
-      <Link href={`/project/${_id}`}>
+      <Link href={`/project/${slug?.current}`}>
         <p className="text-sm text-neutral-500 line-clamp-2 my-2">
           {description}
         </p>
