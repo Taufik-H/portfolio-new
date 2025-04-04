@@ -13,3 +13,7 @@ export const formatDate = (date: Date) => {
   };
   return date.toLocaleDateString("id-ID", option);
 };
+
+export function parseServerActionResponse<T>(response: T) {
+  return JSON.parse(JSON.stringify(response));
+}

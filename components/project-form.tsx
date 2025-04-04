@@ -1,20 +1,70 @@
 "use client";
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
 import MDEditor from "@uiw/react-md-editor";
 import { useTheme } from "next-themes";
+import { formSchema } from "@/lib/validation";
+import type { z } from "zod";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { createProject } from "@/lib/actions";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ProjectForm = () => {
-  const [error, setError] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState("");
   const { theme } = useTheme();
   const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    setValue,
+  } = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      category: "",
+      link: "",
+      pitch: "",
+    },
+  });
+
   useEffect(() => {
     setIsClient(true);
   }, []);
+
+  useEffect(() => {
+    setValue("pitch", pitch);
+  }, [pitch, setValue]);
+
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const formData = new FormData();
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("category", data.category);
+      formData.append("link", data.link);
+
+      const result = await createProject(null, formData, pitch);
+
+      if (result.status === "SUCCESS") {
+        toast.success("Cool you're done!");
+        router.push(`/project/${result.slug.current}`);
+      } else {
+        toast.error("Please check your input & try again!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred");
+    }
+  };
+
   //   const [categoryInput, setCategoryInput] = useState("");
   //   const [categories, setCategories] = useState<string[]>([]);
 
@@ -37,7 +87,7 @@ const ProjectForm = () => {
   //   };
 
   return (
-    <form action={() => {}}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-3xl font-black mb-8 text-center">Create Project</h2>
 
       <div className="mb-6">
@@ -46,13 +96,12 @@ const ProjectForm = () => {
         </label>
         <Input
           id="title"
-          name="title"
           className="brutalism-border pressable"
-          required
           placeholder="Enter project title"
+          {...register("title")}
         />
-        {error.title && (
-          <p className="text-red-600 mt-1 font-bold">{error.title}</p>
+        {errors.title && (
+          <p className="text-red-600 mt-1 font-bold">{errors.title.message}</p>
         )}
       </div>
 
@@ -62,28 +111,31 @@ const ProjectForm = () => {
         </label>
         <Textarea
           id="description"
-          name="description"
           className="brutalism-border pressable min-h-20"
-          required
           placeholder="Describe your project"
+          {...register("description")}
         />
-        {error.description && (
-          <p className="text-red-600 mt-1 font-bold">{error.description}</p>
+        {errors.description && (
+          <p className="text-red-600 mt-1 font-bold">
+            {errors.description.message}
+          </p>
         )}
       </div>
+
       <div className="mb-6">
         <label htmlFor="category" className="block text-lg font-bold mb-2">
           Category
         </label>
         <Textarea
           id="category"
-          name="category"
           className="brutalism-border pressable"
-          required
           placeholder="category"
+          {...register("category")}
         />
-        {error.category && (
-          <p className="text-red-600 mt-1 font-bold">{error.category}</p>
+        {errors.category && (
+          <p className="text-red-600 mt-1 font-bold">
+            {errors.category.message}
+          </p>
         )}
       </div>
 
@@ -137,15 +189,15 @@ const ProjectForm = () => {
         </label>
         <Input
           id="link"
-          name="link"
           className="brutalism-border pressable"
-          required
           placeholder="Enter image URL"
+          {...register("link")}
         />
-        {error.link && (
-          <p className="text-red-600 mt-1 font-bold">{error.link}</p>
+        {errors.link && (
+          <p className="text-red-600 mt-1 font-bold">{errors.link.message}</p>
         )}
       </div>
+
       {isClient && (
         <div className="mb-8" data-color-mode={theme || "system"}>
           <label htmlFor="pitch" className="block text-lg font-bold mb-2">
@@ -165,14 +217,21 @@ const ProjectForm = () => {
               disallowedElements: ["style"],
             }}
           />
-          {error.pitch && (
-            <p className="text-red-600 mt-1 font-bold">{error.pitch}</p>
+          {errors.pitch && (
+            <p className="text-red-600 mt-1 font-bold">
+              {errors.pitch.message}
+            </p>
           )}
         </div>
       )}
 
-      <Button type="submit" variant={"amber"} className="w-full">
-        Submit Project
+      <Button
+        type="submit"
+        variant={"amber"}
+        className="w-full"
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Submitting..." : "Submit"}
       </Button>
     </form>
   );

@@ -4,6 +4,8 @@ import "./globals.css";
 import ClickEffect from "@/components/ui/click-effect";
 import { ThemeProvider } from "@/components/theme-provider";
 import "easymde/dist/easymde.min.css";
+import { Toaster } from "react-hot-toast";
+import Navbar from "@/components/navbar";
 export const fredoka = Fredoka({
   subsets: ["latin"],
 });
@@ -18,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${fredoka.className} antialiased`}>
         <ClickEffect
           sparkColor="oklch(0.705 0.213 47.604)"
@@ -36,6 +38,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          <Toaster position="top-center" reverseOrder={false} />
         </ClickEffect>
       </body>
     </html>

@@ -50,3 +50,32 @@ export const AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
       bio
   }
   `);
+
+export const CURRENT_USER_BY_USERNAME = defineQuery(`
+  *[_type == "author" && username == $username][0]{
+      _id,
+      id,
+      name,
+      username,
+      email,
+      image,
+      bio
+  }
+  `);
+
+export const PROJECT_BY_USER_QUERY = defineQuery(
+  `*[_type == "project" && author->username == $username && (
+  !defined($search) || category match $search)] | order(_createdAt desc){
+      _id,
+      title,
+      slug,
+      _createdAt,
+      author->{
+        _id, name, username, image, bio
+      },
+      views,
+      description,
+      category,
+      image
+    }`
+);

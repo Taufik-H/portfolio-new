@@ -25,7 +25,7 @@ const buttonVariants = cva(
         green:
           "ease-in-out bg-green-500 text-white shadow-none border-1 border-r-2 border-b-3 border-green-600 hover:bg-green-600 hover:border-green-700",
         amber:
-          "ease-in-out bg-amber-300 text-white shadow-none border-1 border-r-2 border-b-3 border-amber-400 hover:bg-amber-400 hover:border-amber-500",
+          "ease-in-out bg-amber-500 text-white shadow-none border-1 border-r-2 border-b-3 border-amber-600 hover:bg-amber-600 hover:border-amber-700",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

@@ -4,11 +4,17 @@ import ResetForm from "./reset-form";
 import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 import { Input } from "./ui/input";
-const SearchForm = ({ query }: { query?: string }) => {
+const SearchForm = ({
+  query,
+  username,
+}: {
+  query?: string;
+  username?: string;
+}) => {
   return (
     <div>
       <Form
-        action="/"
+        action={`/u/${username}/`}
         scroll={false}
         className="search-form flex gap-2 items-center"
       >
