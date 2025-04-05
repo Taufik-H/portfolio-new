@@ -17,7 +17,7 @@ export const PROJECT_QUERY = defineQuery(
 );
 
 export const SHOWCASE_PROJECT_QUERY = defineQuery(`
- *[_type == "author"][0..3] | order(_createdAt desc){
+ *[_type == "author"][0..2] | order(_createdAt desc){
   _id,
   name,
   email,
