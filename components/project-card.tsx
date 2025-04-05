@@ -26,7 +26,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
   const isNew = defineNewProduct(_createdAt);
   const pathname = usePathname();
   return (
-    <li className="rounded-2xl border-2 border-r-3 border-b-6 p-3 transition-all duration-300 ease-in-out hover:bg-amber-500/10 hover:border-amber-500/20 group">
+    <li className="brutalism-border brutalism-hover transition-all duration-300 ease-in-out dark:hover:bg-neutral-900  group">
       <div className="flex justify-between items-center mb-2">
         <div className="flex gap-2 items-center">
           <Link

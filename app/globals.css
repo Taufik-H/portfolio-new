@@ -126,9 +126,12 @@
   }
 
   .brutalism-border {
-    @apply !border-2 !border-black !rounded-lg !p-3 !min-h-14 !text-lg !shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+    @apply !border-2 !border-neutral-900 !rounded-lg !p-3 !min-h-14 !text-lg !shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] shadow-neutral-900;
   }
   .pressable {
     @apply !transition-all cursor-pointer focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!translate-y-1 focus-visible:!translate-x-1 focus-visible:!shadow-none focus-visible:!border-2;
+  }
+  .brutalism-hover {
+    @apply cursor-pointer hover:!ring-0 hover:!ring-offset-0 hover:!translate-y-1 hover:!translate-x-1 hover:!shadow-none hover:!border-2;
   }
 }
