@@ -1,11 +1,10 @@
 import { SHOWCASE_PROJECT_QUERY } from "@/lib/queries";
+import { cn, defineNewProduct } from "@/lib/utils";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { Author } from "@/sanity/types";
-import { Eye } from "lucide-react";
 import Image from "next/image";
-import { buttonVariants } from "../ui/button";
-import { cn, defineNewProduct } from "@/lib/utils";
 import Link from "next/link";
+import { buttonVariants } from "../ui/button";
 
 const ShowcaseSection = async () => {
   const { data: authors } = await sanityFetch({

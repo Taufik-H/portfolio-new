@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import ProjectCard, { ProjectCardType } from "@/components/project-card";
 import SearchForm from "@/components/search-form";
 import { PROJECT_QUERY } from "@/lib/queries";
@@ -12,7 +11,7 @@ export default async function Home({
   const query = (await searchParams).query;
   const params = { search: query || null };
   const { data: posts } = await sanityFetch({ query: PROJECT_QUERY, params });
-  const session = await auth();
+
   return (
     <>
       <section className="flex justify-between items-center">
@@ -24,7 +23,7 @@ export default async function Home({
       <section>
         <ul className="mt-7 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-5">
           {posts.length > 0 ? (
-            posts.map((post: ProjectCardType, index: number) => (
+            posts.map((post: ProjectCardType) => (
               <ProjectCard key={post?._id} post={post} />
             ))
           ) : (

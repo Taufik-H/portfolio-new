@@ -51,7 +51,7 @@ const ProjectForm = () => {
       formData.append("category", data.category);
       formData.append("link", data.link);
 
-      const result = await createProject(null, formData, pitch);
+      const result = await createProject(formData, pitch);
 
       if (result.status === "SUCCESS") {
         toast.success("Cool you're done!");

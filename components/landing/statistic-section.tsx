@@ -53,9 +53,9 @@ const StatisticSection = () => {
                     </div>
                   </div>
                   <p className="text-gray-700">
-                    "Portolity has completely transformed how I showcase my
-                    work. The clean interface and powerful features make it easy
-                    to create a portfolio that stands out."
+                    Portolity has completely transformed how I showcase my work.
+                    The clean interface and powerful features make it easy to
+                    create a portfolio that stands out.
                   </p>
                   <div className="flex mt-4">
                     <BadgeCheck className="text-[#FF8A00] w-5 h-5" />
@@ -91,9 +91,9 @@ const StatisticSection = () => {
                     </div>
                   </div>
                   <p className="text-gray-700">
-                    "I've landed three major clients directly through my
+                    I&apos;ve landed three major clients directly through my
                     Portolity profile. The integrated contact system makes it so
-                    easy for potential clients to reach out."
+                    easy for potential clients to reach out.
                   </p>
                   <div className="flex mt-4">
                     <BadgeCheck className="text-[#FF8A00] w-5 h-5" />
@@ -127,9 +127,9 @@ const StatisticSection = () => {
                     </div>
                   </div>
                   <p className="text-gray-700">
-                    "The blog feature is a game-changer. I can share my design
+                    The blog feature is a game-changer. I can share my design
                     process and thoughts alongside my portfolio, creating a more
-                    complete picture of who I am as a designer."
+                    complete picture of who I am as a designer.
                   </p>
                   <div className="flex mt-4">
                     <BadgeCheck className="text-[#FF8A00] w-5 h-5" />

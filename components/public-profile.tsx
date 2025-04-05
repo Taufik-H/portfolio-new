@@ -11,7 +11,7 @@ export default async function PublicProfile({
 }>) {
   // console.log("user data", userData);
   const session = await auth();
-  const { bio, username, email, name, image, _id } = userData;
+  const { bio, username, email, _id } = userData;
   return (
     <div className="flex flex-col gap-5 py-10">
       <div className="grid grid-cols-1 lg:grid-cols-2  items-center gap-5">

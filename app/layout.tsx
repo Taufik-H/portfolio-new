@@ -1,12 +1,12 @@
+import { ThemeProvider } from "@/components/theme-provider";
+import ClickEffect from "@/components/ui/click-effect";
+import "easymde/dist/easymde.min.css";
 import type { Metadata } from "next";
 import { Fredoka } from "next/font/google";
-import "./globals.css";
-import ClickEffect from "@/components/ui/click-effect";
-import { ThemeProvider } from "@/components/theme-provider";
-import "easymde/dist/easymde.min.css";
 import { Toaster } from "react-hot-toast";
-import Navbar from "@/components/navbar";
-export const fredoka = Fredoka({
+import "./globals.css";
+
+const fredoka = Fredoka({
   subsets: ["latin"],
 });
 export const metadata: Metadata = {

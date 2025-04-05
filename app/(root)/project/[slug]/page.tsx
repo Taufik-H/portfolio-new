@@ -1,17 +1,19 @@
+import PostView from "@/components/post-view";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { buttonVariants } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { PROJECT_BY_SLUG_QUERY } from "@/lib/queries";
 import { cn, formatDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import { AlarmClock, Clock, Eye } from "lucide-react";
+import { AlarmClock } from "lucide-react";
+import markdownit from "markdown-it";
+import { Fredoka } from "next/font/google";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import React, { Suspense } from "react";
-import markdownit from "markdown-it";
-import { fredoka } from "@/app/layout";
-import { Skeleton } from "@/components/ui/skeleton";
-import PostView from "@/components/post-view";
-
+import { Suspense } from "react";
+const fredoka = Fredoka({
+  subsets: ["latin"],
+});
 const ProjectPage = async ({
   params,
 }: {

@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Author, Project } from "@/sanity/types";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export type ProjectCardType = Omit<Project, "author"> & { author?: Author };
 
@@ -18,7 +19,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
     category,
     image,
     description,
-    _id,
+
     slug,
   } = post;
 
@@ -60,8 +61,10 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
       </div>
       <Link href={`/project/${slug?.current}`}>
         <div className="w-full h-50 rounded-xl overflow-hidden">
-          <img
-            src={image}
+          <Image
+            width={1000}
+            height={1000}
+            src={image || ""}
             alt={title + " image"}
             className="h-full w-full object-center object-cover"
           />

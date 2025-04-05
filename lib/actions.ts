@@ -13,11 +13,7 @@ export const currentUser = async (username: string) => {
   return user as Author;
 };
 
-export const createProject = async (
-  state: any,
-  form: FormData,
-  pitch: string
-) => {
+export const createProject = async (form: FormData, pitch: string) => {
   const session = await auth();
 
   if (!session)

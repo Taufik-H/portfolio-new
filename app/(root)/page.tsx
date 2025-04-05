@@ -1,35 +1,14 @@
-import Image from "next/image";
+import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Eye,
-  Facebook,
-  Instagram,
-  Linkedin,
-  MessageCircle,
-  Palette,
-  PenSquare,
-  Share2,
-  Twitter,
-  User,
-} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import FeatureSection from "@/components/landing/feature-section";
 import Hero from "@/components/landing/hero-section";
 import NavbarSection from "@/components/landing/navbar-section";
-import FeatureSection from "@/components/landing/feature-section";
-import StatisticSection from "@/components/landing/statistic-section";
 import ShowcaseSection from "@/components/landing/showcase-section";
+import StatisticSection from "@/components/landing/statistic-section";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 export default function LandingPage() {
   return (
