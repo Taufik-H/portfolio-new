@@ -67,13 +67,7 @@ const StatisticSection = () => {
                   The clean interface and powerful features make it easy to
                   create a portfolio that stands out.
                 </p>
-                <div className="flex mt-3 sm:mt-4">
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                </div>
+                <div className="flex mt-3 sm:mt-4">😍😍😍😍😍</div>
               </CardContent>
             </Card>
           </div>
@@ -107,13 +101,7 @@ const StatisticSection = () => {
                   Portolity profile. The integrated contact system makes it so
                   easy for potential clients to reach out.
                 </p>
-                <div className="flex mt-3 sm:mt-4">
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                </div>
+                <div className="flex mt-3 sm:mt-4">😍😍😍😍😍</div>
               </CardContent>
             </Card>
           </div>
@@ -147,13 +135,7 @@ const StatisticSection = () => {
                   process and thoughts alongside my portfolio, creating a more
                   complete picture of who I am as a designer.
                 </p>
-                <div className="flex mt-3 sm:mt-4">
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                  <BadgeCheck className="text-[#FF8A00] w-4 h-4 sm:w-5 sm:h-5" />
-                </div>
+                <div className="flex mt-3 sm:mt-4">😍😍😍😍😍</div>
               </CardContent>
             </Card>
           </div>

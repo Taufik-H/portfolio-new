@@ -59,7 +59,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           </p>
         )}
       </div>
-      <Link href={`/project/${slug?.current}`}>
+      <Link href={`${pathname}/project/${slug?.current}`}>
         <div className="w-full h-50 rounded-xl overflow-hidden">
           <Image
             width={1000}
@@ -70,19 +70,19 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           />
         </div>
       </Link>
-      <Link href={`/project/${slug?.current}`}>
+      <Link href={`${pathname}/project/${slug?.current}`}>
         <p className="text-2xl font-semibold capitalize my-2 line-clamp-1">
           {title}
         </p>
       </Link>
       <div className="flex gap-1 items-center">
-        <Link href={`/user/${author?._id}`}>
+        <Link href={`/u/${author?.username}`}>
           <Avatar className="w-3 h-3">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </Link>
-        <Link href={`/user/${author?._id}`}>
+        <Link href={`/user/${author?.username}`}>
           <p className="text-neutral-500 font-semibold text-xs border-r-2 pr-1">
             {author?.name}
           </p>
@@ -92,13 +92,13 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           {formatDate(new Date(_createdAt))}
         </p>
       </div>
-      <Link href={`/project/${slug?.current}`}>
+      <Link href={`${pathname}/project/${slug?.current}`}>
         <p className="text-sm text-neutral-500 line-clamp-2 my-2">
           {description}
         </p>
       </Link>
       <Link
-        href={`/project/${slug?.current}`}
+        href={`${pathname}/project/${slug?.current}`}
         className={cn(
           buttonVariants({ variant: "amber" }),
           "w-full rounded-lg"

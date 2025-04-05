@@ -20,10 +20,9 @@ export default async function Layout({
   return (
     <main>
       <Navbar user={user} />
-      <div className="container mx-auto pb-10">
-        <PublicProfile userData={user} />
+      <PublicProfile userData={user} key={user._id}>
         {children}
-      </div>
+      </PublicProfile>
     </main>
   );
 }

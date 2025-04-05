@@ -1,3 +1,4 @@
+"use client";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 import { Separator } from "../ui/separator";

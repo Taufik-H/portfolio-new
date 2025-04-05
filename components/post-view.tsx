@@ -19,7 +19,7 @@ const PostView = async ({ id }: { id: string }) => {
   );
   return (
     <>
-      <div className="text-neutral-400 font-medium flex gap-2  items-center">
+      <div className="text-neutral-400 font-medium flex gap-2 items-center justify-end text-xs md:text-sm">
         <Eye size={15} strokeWidth={3} /> <p>{totalViews}</p>
       </div>
     </>

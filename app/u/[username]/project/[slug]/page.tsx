@@ -37,12 +37,12 @@ const ProjectPage = async ({
         >
           {post.category}
         </p>
-        <h1 className="text-4xl  font-semibold text-left text-amber-500 my-2">
+        <h1 className="text-2xl lg:text-4xl  font-semibold text-left text-amber-500 my-2">
           {post.title}
         </h1>
         <p className="text-neutral-400 font-medium">{post.description}</p>
       </div>
-      <div className="w-full h-[500px] rounded-3xl overflow-hidden relative my-5">
+      <div className="w-full h-80 lg:h-120 rounded-3xl overflow-hidden relative my-5">
         <Image
           src={post.image}
           fill
@@ -57,19 +57,19 @@ const ProjectPage = async ({
             <AvatarFallback>AV</AvatarFallback>
           </Avatar>
           <div className="">
-            <p className="text-lg font-semibold leading-5 ">
+            <p className="text-xs md:text-base lg:text-lg font-semibold leading-5 ">
               {post.author.name}
             </p>
-            <p className="text-sm font-medium text-neutral-400">
+            <p className="text-xs md:text-sm font-medium text-neutral-400">
               @{post.author.username}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-end md:items-center justify-end md:gap-5 flex-col md:flex-row">
           <Suspense fallback={<Skeleton className="w-10 h-5 rounded" />}>
             <PostView id={post._id} />
           </Suspense>
-          <div className="text-neutral-400 font-medium flex gap-2  items-center">
+          <div className="text-neutral-400 font-medium flex gap-2  items-center text-xs md:text-base lg:text-lg">
             <AlarmClock size={15} strokeWidth={3} />{" "}
             {formatDate(new Date(post._createdAt))}
           </div>
