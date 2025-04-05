@@ -1,28 +1,38 @@
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import { client } from "@/sanity/lib/client";
 import { writeClient } from "@/sanity/lib/write-client";
-import { AUTHOR_BY_GITHUB_ID_QUERY } from "./lib/queries";
+import { AUTHOR_BY_AUTH_ID_QUERY } from "./lib/queries";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [GitHub],
+  providers: [
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    }),
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+  ],
   callbacks: {
     async signIn({ user: { name, email, image }, profile }) {
       const existingUser = await client
         .withConfig({ useCdn: false })
-        .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
-          id: profile?.id,
+        .fetch(AUTHOR_BY_AUTH_ID_QUERY, {
+          id: profile?.id || profile?.sub,
         });
 
       if (!existingUser) {
         await writeClient.create({
           _type: "author",
-          id: profile?.id,
+          id: profile?.id || profile?.sub,
           name,
-          username: profile?.login,
+          username: profile?.login || profile?.email?.split("@")[0],
           email,
           image,
-          bio: profile?.bio || "",
+          bio: profile?.bio || "This is The Bio You Should Set",
         });
       }
 
@@ -32,12 +42,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account && profile) {
         const user = await client
           .withConfig({ useCdn: false })
-          .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
-            id: profile?.id,
+          .fetch(AUTHOR_BY_AUTH_ID_QUERY, {
+            id: profile?.id || profile?.sub,
           });
 
         token.id = user?._id;
-        token.username = profile?.login;
+        token.username = profile?.login || profile?.email?.split("@")[0];
       }
 
       return token;
