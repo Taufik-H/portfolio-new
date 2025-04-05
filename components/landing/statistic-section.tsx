@@ -1,7 +1,6 @@
-import { BadgeCheck } from "lucide-react";
-import { Card, CardContent } from "../ui/card";
-import Image from "next/image";
 import { statistics } from "@/lib/constants";
+import Image from "next/image";
+import { Card, CardContent } from "../ui/card";
 
 const StatisticSection = () => {
   return (
