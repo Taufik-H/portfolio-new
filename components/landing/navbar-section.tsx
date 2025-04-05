@@ -107,7 +107,7 @@ const NavbarSection = async () => {
             <form
               action={async () => {
                 "use server";
-                await signIn("github");
+                await signIn("google");
               }}
             >
               <Button type="submit" variant={"amber"}>
