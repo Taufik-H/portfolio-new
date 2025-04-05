@@ -2,7 +2,6 @@ import { auth, signIn } from "@/auth";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { ModeToggle } from "../mode-toggle";
 import { Button, buttonVariants } from "../ui/button";
 
 const Hero = async () => {
@@ -10,38 +9,6 @@ const Hero = async () => {
 
   return (
     <>
-      <header className="fixed top-0 w-full bg-[#FCFCFC] dark:bg-neutral-900 z-50 left-0">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="h-10 w-10 bg-black rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">P</span>
-            </div>
-            <span className="font-bold text-xl">Portolity</span>
-          </div>
-
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="#features" className="font-medium hover:underline">
-              Features
-            </Link>
-            <Link href="#testimonials" className="font-medium hover:underline">
-              Testimonials
-            </Link>
-            <Link href="#how-it-works" className="font-medium hover:underline">
-              How it works
-            </Link>
-            {/* <Link href="#faq" className="font-medium hover:underline">
-              FAQ
-            </Link> */}
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <ModeToggle />
-            <Button variant="amber" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-30">
         <div className="grid md:grid-cols-2 gap-20 items-center">

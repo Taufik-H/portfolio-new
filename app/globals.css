@@ -126,9 +126,9 @@
   }
 
   .brutalism-border {
-    @apply !border-4 !border-black !rounded-lg !p-3 !min-h-14 !text-lg !shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
+    @apply !border-2 !border-black !rounded-lg !p-3 !min-h-14 !text-lg !shadow-[4px_4px_0px_0px_rgba(0,0,0,1)];
   }
   .pressable {
-    @apply !transition-all focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!translate-y-1 focus-visible:!translate-x-1 focus-visible:!shadow-none focus-visible:!border-2;
+    @apply !transition-all cursor-pointer focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!translate-y-1 focus-visible:!translate-x-1 focus-visible:!shadow-none focus-visible:!border-2;
   }
 }

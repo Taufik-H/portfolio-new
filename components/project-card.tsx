@@ -1,5 +1,5 @@
 "use client";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, defineNewProduct, formatDate } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { EyeIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -21,15 +21,6 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
     _id,
     slug,
   } = post;
-
-  //determine if the product is new (created within the last 7 days)
-  const defineNewProduct = (_createdAt: string | Date) => {
-    const createdAt = new Date(_createdAt);
-    const currentDate = new Date();
-    const diffTime = Math.abs(currentDate.getTime() - createdAt.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return diffDays < 7;
-  };
 
   const isNew = defineNewProduct(_createdAt);
   const pathname = usePathname();

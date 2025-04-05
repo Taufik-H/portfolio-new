@@ -15,6 +15,17 @@ export const PROJECT_QUERY = defineQuery(
   image
 }`
 );
+
+export const SHOWCASE_PROJECT_QUERY = defineQuery(`
+ *[_type == "author"][0..3] | order(_createdAt desc){
+  _id,
+  name,
+  email,
+  username,
+  image,
+  bio
+}  
+  `);
 export const PROJECT_BY_SLUG_QUERY = defineQuery(
   `*[_type =="project" && slug.current == $slug][0]{
   _id,

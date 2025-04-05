@@ -17,3 +17,12 @@ export const formatDate = (date: Date) => {
 export function parseServerActionResponse<T>(response: T) {
   return JSON.parse(JSON.stringify(response));
 }
+
+//determine if the product is new (created within the last 7 days)
+export const defineNewProduct = (_createdAt: string | Date) => {
+  const createdAt = new Date(_createdAt);
+  const currentDate = new Date();
+  const diffTime = Math.abs(currentDate.getTime() - createdAt.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays < 7;
+};

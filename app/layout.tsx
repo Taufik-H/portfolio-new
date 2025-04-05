@@ -21,7 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="scroll-smooth">
-      <body className={`${fredoka.className} antialiased`}>
+      <body
+        className={`${fredoka.className} antialiased bg-[#FCFCFC] dark:bg-background`}
+      >
         <ClickEffect
           sparkColor="oklch(0.705 0.213 47.604)"
           sparkSize={10}
