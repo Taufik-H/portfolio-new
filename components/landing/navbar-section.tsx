@@ -16,7 +16,7 @@ const NavbarSection = async () => {
   const session = await auth();
   return (
     <header className="fixed top-0 w-full bg-[#FCFCFC] dark:bg-neutral-900 z-50 left-0">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+      <div className="section-container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="h-10 w-10 bg-black rounded-full flex items-center justify-center">
             <span className="text-white font-bold">P</span>
