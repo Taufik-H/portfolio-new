@@ -1,4 +1,4 @@
-import { auth, signIn, signOut } from "@/auth";
+import { auth, signOut } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,11 +7,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "../mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 const NavbarSection = async () => {
   const session = await auth();
   return (
@@ -104,16 +105,12 @@ const NavbarSection = async () => {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <form
-              action={async () => {
-                "use server";
-                await signIn("google");
-              }}
+            <Link
+              href="/auth"
+              className={cn(buttonVariants({ variant: "amber" }))}
             >
-              <Button type="submit" variant={"amber"}>
-                Login
-              </Button>
-            </form>
+              Login
+            </Link>
           )}
         </div>
       </div>
