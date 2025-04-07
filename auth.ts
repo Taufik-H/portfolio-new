@@ -27,12 +27,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!existingUser) {
         await writeClient.create({
           _type: "author",
-          id: profile?.id || profile?.sub,
+          _id: profile?.id || profile?.sub, // Gunakan _id
           name,
           username: profile?.login || profile?.email?.split("@")[0],
           email,
           image,
-          bio: profile?.bio || "This is The Bio You Should Set",
+          profile_title: "This is The Bio You Should Set",
+          role: ["frontend engineer", "uiux designer"], // Bisa langsung array biasa
+          skills: ["This skills will appear here"], // Array biasa juga
+          bio:
+            profile?.bio ||
+            "If you are logged in using GitHub, this bio will be displayed. If you are using Google, you will have to set it manually.",
         });
       }
 

@@ -140,7 +140,7 @@ export type Project = {
     [internalGroqTypeReferenceTo]?: "author";
   };
   views?: number;
-  category?: string;
+  category?: Array<string>;
   description?: string;
   image?: string;
   pitch?: string;
@@ -162,6 +162,9 @@ export type Author = {
   name?: string;
   username?: string;
   email?: string;
+  profile_title?: string;
+  role?: Array<string>;
+  skills?: Array<string>;
   image?: string;
   bio?: string;
 };

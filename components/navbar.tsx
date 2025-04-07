@@ -103,7 +103,7 @@ const Navbar = async ({ user }: { user: Author }) => {
             <div className="flex gap-2 items-center">
               {session?.id === user._id && (
                 <Link
-                  href="/project/create"
+                  href={`/u/${session?.username}/project/create`}
                   className={cn(
                     buttonVariants({ variant: "amber" }),
                     "rounded-full border-2 border-black dark:border-neutral-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
@@ -241,7 +241,7 @@ const Navbar = async ({ user }: { user: Author }) => {
 
                       {session?.id === user._id && (
                         <Link
-                          href="/project/create"
+                          href={`/u/${session?.username}/project/create`}
                           className={cn(
                             buttonVariants({ variant: "amber" }),
                             "w-full justify-center mb-4 border-2 border-black dark:border-neutral-600 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"

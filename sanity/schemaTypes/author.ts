@@ -26,6 +26,22 @@ export const author = defineType({
       type: "string",
     }),
     defineField({
+      name: "profile_title",
+      type: "string",
+    }),
+    {
+      name: "role",
+      type: "array",
+      title: "Role",
+      of: [{ type: "string" }], // Array of strings, bukan reference
+    },
+    {
+      name: "skills",
+      type: "array",
+      title: "Skills",
+      of: [{ type: "string" }], // Array of strings, bukan reference
+    },
+    defineField({
       name: "image",
       title: "Image",
       type: "url",

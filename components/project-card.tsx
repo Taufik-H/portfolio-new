@@ -1,12 +1,11 @@
 "use client";
-import { cn, defineNewProduct, formatDate } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
-import { EyeIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
+import { cn, defineNewProduct, formatDate } from "@/lib/utils";
 import { Author, Project } from "@/sanity/types";
-import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button, buttonVariants } from "./ui/button";
 
 export type ProjectCardType = Omit<Project, "author"> & { author?: Author };
 
@@ -15,13 +14,14 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
     _createdAt,
     author,
     title,
-    views,
-    category,
+
     image,
     description,
 
     slug,
   } = post;
+
+  const category = post?.category || undefined;
 
   const isNew = defineNewProduct(_createdAt);
   const pathname = usePathname();
@@ -29,24 +29,20 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
     <li className="brutalism-border brutalism-hover transition-all duration-300 ease-in-out dark:hover:bg-neutral-900  group">
       <div className="flex justify-between items-center mb-2">
         <div className="flex gap-2 items-center">
-          <Link
-            href={`${pathname}/?query=${category?.toLowerCase()}`}
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "rounded-full bg-transparent hover:bg-transparent"
-            )}
-          >
-            {category}
-          </Link>
-          <p
-            className={cn(
-              buttonVariants({ variant: "outline", size: "sm" }),
-              "rounded-full bg-transparent hover:bg-transparent"
-            )}
-          >
-            <EyeIcon size={20} />
-            {views}
-          </p>
+          {category?.slice(0, 1).map((c, i) => (
+            <Button
+              key={i}
+              variant="outline"
+              size="sm"
+              className="rounded-full"
+            >
+              {c}
+            </Button>
+          ))}
+
+          {(category?.length ?? 0) > 1 && (
+            <span className="text-xs">+{(category?.length ?? 0) - 1}</span>
+          )}
         </div>
         {isNew && (
           <p

@@ -22,7 +22,7 @@ export const project = defineType({
       name: "author",
       title: "Author",
       type: "reference",
-      to: { type: "author" },
+      to: [{ type: "author" }],
     }),
     defineField({
       name: "views",
@@ -31,13 +31,11 @@ export const project = defineType({
     }),
     defineField({
       name: "category",
-      title: "Category",
-      type: "string",
+      title: "Categories",
+      type: "array",
+      of: [{ type: "string" }],
       validation: (Rule) =>
-        Rule.required()
-          .min(3)
-          .max(20)
-          .error("Category must be between 3 and 20 characters"),
+        Rule.required().min(1).error("At least one category is required"),
     }),
     defineField({
       name: "description",

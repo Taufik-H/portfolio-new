@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type KeyboardEvent } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -8,17 +8,21 @@ import { useTheme } from "next-themes";
 import { formSchema } from "@/lib/validation";
 import type { z } from "zod";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createProject } from "@/lib/actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { X } from "lucide-react";
 
 const ProjectForm = () => {
   const [pitch, setPitch] = useState("");
   const { theme } = useTheme();
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
-
+  const [categoryInput, setCategoryInput] = useState("");
+  const [categories, setCategories] = useState<string[]>([]);
+  const { username } = useParams();
+  console.log(categories.length);
   const {
     register,
     handleSubmit,
@@ -29,7 +33,7 @@ const ProjectForm = () => {
     defaultValues: {
       title: "",
       description: "",
-      category: "",
+      category: [],
       link: "",
       pitch: "",
     },
@@ -43,19 +47,42 @@ const ProjectForm = () => {
     setValue("pitch", pitch);
   }, [pitch, setValue]);
 
+  useEffect(() => {
+    setValue("category", categories);
+  }, [categories, setValue]);
+
+  const handleAddCategory = () => {
+    if (categoryInput.trim() && !categories.includes(categoryInput.trim())) {
+      setCategories([...categories, categoryInput.trim()]);
+      setValue("category", categories);
+      setCategoryInput("");
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      handleAddCategory();
+    }
+  };
+
+  const removeCategory = (category: string) => {
+    setCategories(categories.filter((cat) => cat !== category));
+  };
+
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("description", data.description);
-      formData.append("category", data.category);
       formData.append("link", data.link);
 
-      const result = await createProject(formData, pitch);
+      const result = await createProject(formData, pitch, categories);
+      console.log(result);
 
       if (result.status === "SUCCESS") {
-        toast.success("Cool you're done!");
-        router.push(`/project/${result.slug.current}`);
+        toast.success("Cool, you're done!");
+        router.push(`/u/${username}/project/${result.slug.current}`);
       } else {
         toast.error("Please check your input & try again!");
       }
@@ -64,27 +91,6 @@ const ProjectForm = () => {
       toast.error("An unexpected error occurred");
     }
   };
-
-  //   const [categoryInput, setCategoryInput] = useState("");
-  //   const [categories, setCategories] = useState<string[]>([]);
-
-  //   const handleAddCategory = () => {
-  //     if (categoryInput.trim() && !categories.includes(categoryInput.trim())) {
-  //       setCategories([...categories, categoryInput.trim()]);
-  //       setCategoryInput("");
-  //     }
-  //   };
-
-  //   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-  //     if (e.key === "Enter" || e.key === ",") {
-  //       e.preventDefault();
-  //       handleAddCategory();
-  //     }
-  //   };
-
-  //   const removeCategory = (category: string) => {
-  //     setCategories(categories.filter((cat) => cat !== category));
-  //   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -124,23 +130,6 @@ const ProjectForm = () => {
 
       <div className="mb-6">
         <label htmlFor="category" className="block text-lg font-bold mb-2">
-          Category
-        </label>
-        <Textarea
-          id="category"
-          className="brutalism-border pressable"
-          placeholder="category"
-          {...register("category")}
-        />
-        {errors.category && (
-          <p className="text-red-600 mt-1 font-bold">
-            {errors.category.message}
-          </p>
-        )}
-      </div>
-
-      {/* <div className="mb-6">
-        <label htmlFor="category" className="block text-lg font-bold mb-2">
           Categories
         </label>
         <div className="flex flex-wrap gap-2 mb-3">
@@ -178,10 +167,12 @@ const ProjectForm = () => {
           </Button>
         </div>
         <input type="hidden" name="categories" value={categories.join(",")} />
-        {error.category && (
-          <p className="text-red-600 mt-1 font-bold">{error.category}</p>
+        {errors.category && (
+          <p className="text-red-600 mt-1 font-bold">
+            {errors.category.message}
+          </p>
         )}
-      </div> */}
+      </div>
 
       <div className="mb-8">
         <label htmlFor="link" className="block text-lg font-bold mb-2">

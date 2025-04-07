@@ -13,29 +13,52 @@ export const currentUser = async (username: string) => {
   return user as Author;
 };
 
-export const createProject = async (form: FormData, pitch: string) => {
-  const session = await auth();
+const generateUniqueSlug = async (baseSlug: string) => {
+  let newSlug = baseSlug;
+  let count = 1;
+  let exists = await client.fetch(
+    `count(*[_type == "project" && slug.current == $slug])`,
+    { slug: newSlug }
+  );
 
+  while (exists > 0) {
+    newSlug = `${baseSlug}-${count}`;
+    exists = await client.fetch(
+      `count(*[_type == "project" && slug.current == $slug])`,
+      { slug: newSlug }
+    );
+    count++;
+  }
+
+  return newSlug;
+};
+
+export const createProject = async (
+  form: FormData,
+  pitch: string,
+  categories: string[]
+) => {
+  const session = await auth();
   if (!session)
     return parseServerActionResponse({
-      error: "Not sign in",
+      error: "Not signed in",
       status: "ERROR",
     });
 
-  const { title, description, category, link } = Object.fromEntries(
-    Array.from(form).filter(([key]) => key !== "pitch")
-  );
+  const { title, description, link } = Object.fromEntries(form);
 
-  const slug = slugify(title as string, { lower: true, strict: true });
+  const baseSlug = slugify(title as string, { lower: true, strict: true });
+  const uniqueSlug = await generateUniqueSlug(baseSlug);
+
   try {
     const project = {
       title,
       description,
-      category,
+      category: categories,
       image: link,
       slug: {
-        _type: slug,
-        current: slug,
+        _type: "slug",
+        current: uniqueSlug,
       },
       author: {
         _type: "reference",
