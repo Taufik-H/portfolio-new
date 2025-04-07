@@ -10,16 +10,7 @@ import { Button, buttonVariants } from "./ui/button";
 export type ProjectCardType = Omit<Project, "author"> & { author?: Author };
 
 const ProjectCard = ({ post }: { post: ProjectCardType }) => {
-  const {
-    _createdAt,
-    author,
-    title,
-
-    image,
-    description,
-
-    slug,
-  } = post;
+  const { _createdAt, author, title, image, description, slug } = post;
 
   const category = post?.category || undefined;
 
@@ -41,7 +32,9 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
           ))}
 
           {(category?.length ?? 0) > 1 && (
-            <span className="text-xs">+{(category?.length ?? 0) - 1}</span>
+            <span className="text-xs text-neutral-500">
+              +{(category?.length ?? 0) - 1}
+            </span>
           )}
         </div>
         {isNew && (

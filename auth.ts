@@ -32,12 +32,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           username: profile?.login || profile?.email?.split("@")[0],
           email,
           image,
-          profile_title: "This is The Bio You Should Set",
-          role: ["frontend engineer", "uiux designer"], // Bisa langsung array biasa
+          profile_title: "",
+          role: [], // Bisa langsung array biasa
           skills: ["This skills will appear here"], // Array biasa juga
-          bio:
-            profile?.bio ||
-            "If you are logged in using GitHub, this bio will be displayed. If you are using Google, you will have to set it manually.",
+          bio: profile?.bio || "",
         });
       }
 

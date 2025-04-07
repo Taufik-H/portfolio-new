@@ -16,7 +16,7 @@ export default async function User({
     username,
     search: query || null,
   });
-  console.log(projects);
+
   return (
     <>
       <section className="flex justify-between items-center">

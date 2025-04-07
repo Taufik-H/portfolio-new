@@ -33,13 +33,13 @@ export const author = defineType({
       name: "role",
       type: "array",
       title: "Role",
-      of: [{ type: "string" }], // Array of strings, bukan reference
+      of: [{ type: "string" }],
     },
     {
       name: "skills",
       type: "array",
       title: "Skills",
-      of: [{ type: "string" }], // Array of strings, bukan reference
+      of: [{ type: "string" }],
     },
     defineField({
       name: "image",
@@ -47,9 +47,20 @@ export const author = defineType({
       type: "url",
     }),
     defineField({
+      name: "cover_image",
+      title: "Cover Image",
+      type: "url",
+    }),
+    defineField({
       name: "bio",
       title: "Bio",
       type: "text",
+    }),
+    defineField({
+      name: "status",
+      title: "User Status",
+      type: "reference",
+      to: [{ type: "user_status" }],
     }),
   ],
   preview: {
