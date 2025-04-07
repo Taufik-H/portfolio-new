@@ -106,7 +106,7 @@ const Navbar = async ({ user }: { user: Author }) => {
                   href={`/u/${session?.username}/project/create`}
                   className={cn(
                     buttonVariants({ variant: "amber" }),
-                    "rounded-full border-2 border-black dark:border-neutral-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
+                    "brutalism-btn"
                   )}
                 >
                   New Project

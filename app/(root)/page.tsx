@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import CtaSection from "@/components/landing/cta-section";
 import FeatureSection from "@/components/landing/feature-section";
 import FooterSection from "@/components/landing/footer-section";
@@ -6,8 +7,11 @@ import HowItWorks from "@/components/landing/how-it-work";
 import NavbarSection from "@/components/landing/navbar-section";
 import ShowcaseSection from "@/components/landing/showcase-section";
 import StatisticSection from "@/components/landing/statistic-section";
+import { SanityLive } from "@/sanity/lib/live";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const session = await auth();
+  console.log(session?.id);
   return (
     <div className="min-h-screen bg-[#FCFCFC] dark:bg-background">
       <NavbarSection />
@@ -18,6 +22,7 @@ export default function LandingPage() {
       <HowItWorks />
       <CtaSection />
       <FooterSection />
+      <SanityLive />
     </div>
   );
 }

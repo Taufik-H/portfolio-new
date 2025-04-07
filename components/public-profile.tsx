@@ -62,7 +62,7 @@ export default async function PublicProfile({
             <div className="flex"></div>
             {/* button */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
-              <Button variant={"amber"} className="rounded-full">
+              <Button variant={"amber"} className="rounded-full  brutalism-btn">
                 get in touch
               </Button>
               {_id === session?.id && (
@@ -70,7 +70,7 @@ export default async function PublicProfile({
                   href={`/u/${session?.username}/edit/profile`}
                   className={cn(
                     buttonVariants({ variant: "outline" }),
-                    "rounded-full"
+                    "rounded-full brutalism-btn"
                   )}
                 >
                   edit profile
@@ -79,7 +79,7 @@ export default async function PublicProfile({
               <Button
                 variant={"outline"}
                 size={"icon"}
-                className="rounded-full hidden md:flex"
+                className="rounded-full hidden md:flex  brutalism-btn"
               >
                 <Share2 />
               </Button>

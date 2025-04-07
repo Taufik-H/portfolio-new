@@ -1,18 +1,16 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
+import AuthButton from "../auth/auth-button";
 import { ModeToggle } from "../mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button, buttonVariants } from "../ui/button";
 const NavbarSection = async () => {
   const session = await auth();
   return (
@@ -57,10 +55,10 @@ const NavbarSection = async () => {
                   </Avatar>
                 </>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className="border-2 border-black dark:border-neutral-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                 <DropdownMenuLabel>
                   <div className="flex gap-2 items-center">
-                    <Avatar className="w-5 h-5">
+                    <Avatar className="w-5 h-5 border border-black dark:border-neutral-600">
                       <AvatarImage
                         src={
                           session?.user?.image ||
@@ -68,15 +66,17 @@ const NavbarSection = async () => {
                         }
                         alt="portolity"
                       />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarFallback className="bg-[#FF8A00] text-black text-xs font-bold">
+                        {session?.username?.charAt(0) || "P"}
+                      </AvatarFallback>
                     </Avatar>
-                    <div className="">
+                    <div>
                       <h1 className="text-sm font-semibold">
                         <Link href={`/u/${session?.username}`}>
                           {session?.username || "Portify"}
                         </Link>
                       </h1>
-                      <p className="text-neutral-500 font-medium text-xs">
+                      <p className="text-neutral-500 dark:text-neutral-400 font-medium text-xs">
                         {session?.user?.email}
                       </p>
                     </div>
@@ -84,33 +84,21 @@ const NavbarSection = async () => {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem asChild>
-                  <form
-                    action={async () => {
-                      "use server";
-                      await signOut({ redirectTo: "/" });
-                    }}
+                <div className="mt-auto p-2">
+                  <AuthButton
+                    action="signout"
+                    icon={<LogOut size={16} className="mr-2" />}
+                    className="w-full"
                   >
-                    <Button
-                      type="submit"
-                      variant={"destructive"}
-                      size={"sm"}
-                      className="w-full justify-start"
-                    >
-                      <LogOut size={20} />
-                      Logout
-                    </Button>
-                  </form>
-                </DropdownMenuItem>
+                    Logout
+                  </AuthButton>
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <Link
-              href="/auth"
-              className={cn(buttonVariants({ variant: "amber" }))}
-            >
+            <AuthButton action="signin" redirectToAuth={true}>
               Login
-            </Link>
+            </AuthButton>
           )}
         </div>
       </div>

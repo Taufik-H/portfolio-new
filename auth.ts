@@ -18,16 +18,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async signIn({ user: { name, email, image }, profile }) {
+      console.log(profile);
       const existingUser = await client
         .withConfig({ useCdn: false })
         .fetch(AUTHOR_BY_AUTH_ID_QUERY, {
-          id: profile?.id || profile?.sub,
+          id: String(profile?.id) || profile?.sub,
         });
 
       if (!existingUser) {
         await writeClient.create({
           _type: "author",
-          _id: profile?.id || profile?.sub, // Gunakan _id
+          id: String(profile?.id) || profile?.sub,
           name,
           username: profile?.login || profile?.email?.split("@")[0],
           email,
@@ -46,7 +47,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const user = await client
           .withConfig({ useCdn: false })
           .fetch(AUTHOR_BY_AUTH_ID_QUERY, {
-            id: profile?.id || profile?.sub,
+            id: String(profile?.id) || profile?.sub,
           });
 
         token.id = user?._id;
