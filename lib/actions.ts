@@ -82,3 +82,53 @@ export const createProject = async (
     });
   }
 };
+
+// edit profile
+
+export const editProfile = async (
+  form: FormData,
+  id: string,
+  skills: any,
+  role: any
+) => {
+  const {
+    name,
+    username,
+    email,
+    profile_title,
+    bio,
+    image,
+    cover_image,
+    status,
+  } = Object.fromEntries(form);
+
+  try {
+    const updatedUser = await writeClient
+      .patch(id) // Gunakan ID pengguna untuk patch
+      .set({
+        name,
+        username,
+        email,
+        profile_title,
+        bio,
+        image,
+        cover_image,
+        status,
+        skills,
+        role,
+      })
+      .commit();
+
+    return {
+      data: updatedUser,
+      error: "",
+      status: "SUCCESS",
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      error: JSON.stringify(error),
+      status: "ERROR",
+    };
+  }
+};

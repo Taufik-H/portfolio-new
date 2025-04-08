@@ -39,7 +39,25 @@ export const author = defineType({
       name: "skills",
       type: "array",
       title: "Skills",
-      of: [{ type: "string" }],
+      of: [
+        {
+          type: "object",
+          name: "skill",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+            }),
+            defineField({
+              name: "image",
+              title: "Image",
+              type: "url",
+              // Opsional, jadi tidak perlu `Rule.required()`
+            }),
+          ],
+        },
+      ],
     },
     defineField({
       name: "image",
@@ -58,9 +76,15 @@ export const author = defineType({
     }),
     defineField({
       name: "status",
-      title: "User Status",
-      type: "reference",
-      to: [{ type: "user_status" }],
+      title: "Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Student", value: "student" },
+          { title: "Available for Hiring", value: "available_for_hiring" },
+          { title: "Available to Work", value: "available_to_work" },
+        ],
+      },
     }),
   ],
   preview: {

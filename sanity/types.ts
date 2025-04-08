@@ -125,22 +125,6 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type Skills = {
-  _id: string;
-  _type: "skills";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "author";
-  };
-  image?: string;
-};
-
 export type Project = {
   _id: string;
   _type: "project";
@@ -180,34 +164,19 @@ export type Author = {
   email?: string;
   profile_title?: string;
   role?: Array<string>;
-  skills?: Array<string>;
+  skills?: Array<{
+    name?: string;
+    image?: string;
+    _type: "skill";
+    _key: string;
+  }>;
   image?: string;
   cover_image?: string;
   bio?: string;
-  status?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "user_status";
-  };
-};
-
-export type User_status = {
-  _id: string;
-  _type: "user_status";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
   status?: "student" | "available_for_hiring" | "available_to_work";
-  author?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "author";
-  };
 };
 
 export type Markdown = string;
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | SanityAssetSourceData | Skills | Project | Slug | Author | User_status | Markdown;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | SanityAssetSourceData | Project | Slug | Author | Markdown;
 export declare const internalGroqTypeReferenceTo: unique symbol;

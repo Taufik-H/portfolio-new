@@ -35,8 +35,9 @@ export default async function User({
           ))
         ) : (
           <EmptyState
+            currentUser={username}
             title="No project yet!"
-            description="first create your project"
+            description="I am Sorry..."
             action={{
               label: "Create Project",
               href: "#",

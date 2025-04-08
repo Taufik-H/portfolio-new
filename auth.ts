@@ -35,7 +35,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           image,
           profile_title: "",
           role: [], // Bisa langsung array biasa
-          skills: ["This skills will appear here"], // Array biasa juga
           bio: profile?.bio || "",
         });
       }

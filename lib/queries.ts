@@ -58,7 +58,24 @@ export const AUTHOR_BY_AUTH_ID_QUERY = defineQuery(`
       username,
       email,
       image,
-      bio
+      bio,
+      
+  }
+  `);
+export const CURRENT_USER_BY_SESSION_ID = defineQuery(`
+  *[_type == "author" && _id == $id][0]{
+      _id,
+      id,
+      name,
+      username,
+      email,
+      image,
+      bio,
+      role,
+      skills,
+      cover_image,
+      profile_title,
+      status,
   }
   `);
 
@@ -70,7 +87,12 @@ export const CURRENT_USER_BY_USERNAME = defineQuery(`
       username,
       email,
       image,
-      bio
+      bio,
+      role,
+      skills,
+      cover_image,
+      profile_title,
+      status,
   }
   `);
 

@@ -2,11 +2,13 @@ import type React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { auth } from "@/auth";
 
 interface EmptyStateProps {
   title?: string;
   description?: string;
   illustration?: React.ReactNode;
+  currentUser: string;
   action?: {
     label: string;
     href: string;
@@ -14,13 +16,16 @@ interface EmptyStateProps {
   className?: string;
 }
 
-export function EmptyState({
+export async function EmptyState({
   title = "Nothing Found",
   description = "Sorry, there's nothing here yet.",
   illustration,
   action,
   className,
+  currentUser,
 }: EmptyStateProps) {
+  const session = await auth();
+
   return (
     <div
       className={cn(
@@ -36,7 +41,7 @@ export function EmptyState({
         <h3 className="text-xl sm:text-2xl font-bold mb-2">{title}</h3>
         <p className="text-gray-600 dark:text-gray-400 mb-6">{description}</p>
 
-        {action && (
+        {session?.username === currentUser && action && (
           <Link
             href={action.href}
             className={cn(
