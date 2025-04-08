@@ -27,6 +27,10 @@ const NAVBAR_ITEMS = [
     path: "#features",
   },
   {
+    label: "Showcase",
+    path: "#showcase",
+  },
+  {
     label: "Testimonials",
     path: "#testimonials",
   },

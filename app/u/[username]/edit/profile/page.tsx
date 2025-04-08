@@ -8,11 +8,8 @@ const EditProfile = async () => {
   const session = await auth();
   if (!session) return redirect("/");
   const id = session.id;
-  const author = await client
-    .withConfig({ useCdn: false })
-    .fetch(CURRENT_USER_BY_SESSION_ID, { id });
+  const author = await client.fetch(CURRENT_USER_BY_SESSION_ID, { id });
 
-  console.log("from page", author);
   return <EditProfilePage id={session.id} previousData={author} />;
 };
 

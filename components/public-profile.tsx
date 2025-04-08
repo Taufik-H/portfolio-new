@@ -20,7 +20,7 @@ export default async function PublicProfile({
   return (
     <>
       <div className="flex flex-col gap-5 py-10">
-        <section className="mx-auto">
+        <section className="mx-auto w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center ">
             <div className="space-y-4 sm:space-y-6  order-2 md:order-1 text-center md:text-left">
               {/* role */}
@@ -91,16 +91,16 @@ export default async function PublicProfile({
             </div>
             <div className="relative order-1 md:order-2 mx-auto md:mx-0 max-w-[90%] sm:max-w-[80%] md:max-w-full">
               <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 md:-top-6 md:-left-6 w-full h-full bg-[#E0F7FA] dark:bg-neutral-500 border-2 border-black rounded-xl sm:rounded-2xl"></div>
-              <div className="relative border-2 border-black rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+              <div className="relative border-2 border-black rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] aspect-[4/3]">
                 <Image
                   src={
-                    userData.cover_image ??
+                    userData.cover_image ||
                     "https://placehold.co/1600x1200?text=1600x1200\nRecomended+Ratio+(4:3)"
                   }
                   alt="profile image"
-                  width={800}
-                  height={600}
-                  className="w-full h-auto"
+                  width={1600}
+                  height={1200}
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>

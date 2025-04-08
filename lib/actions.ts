@@ -84,27 +84,45 @@ export const createProject = async (
 };
 
 // edit profile
-
 export const editProfile = async (
   form: FormData,
-  id: string,
+  id: string | null,
   skills: any,
   role: any
 ) => {
-  const {
-    name,
-    username,
-    email,
-    profile_title,
-    bio,
-    image,
-    cover_image,
-    status,
-  } = Object.fromEntries(form);
-
+  const session = await auth();
+  if (!session)
+    return parseServerActionResponse({
+      error: "Not signed in",
+      status: "ERROR",
+    });
   try {
+    if (!id) {
+      throw new Error("User ID is required");
+    }
+
+    const parsedForm = Object.fromEntries(form);
+
+    const requiredFields = ["name", "username", "email"];
+    for (const field of requiredFields) {
+      if (!parsedForm[field]) {
+        throw new Error(`Missing required field: ${field}`);
+      }
+    }
+
+    const {
+      name,
+      username,
+      email,
+      profile_title,
+      bio,
+      image,
+      cover_image,
+      status,
+    } = parsedForm;
+
     const updatedUser = await writeClient
-      .patch(id) // Gunakan ID pengguna untuk patch
+      .patch(id)
       .set({
         name,
         username,
@@ -114,8 +132,8 @@ export const editProfile = async (
         image,
         cover_image,
         status,
-        skills,
-        role,
+        skills: skills || [],
+        role: role || [],
       })
       .commit();
 
@@ -125,9 +143,9 @@ export const editProfile = async (
       status: "SUCCESS",
     };
   } catch (error) {
-    console.error(error);
+    console.error("Edit Profile Error:", error);
     return {
-      error: JSON.stringify(error),
+      error: error instanceof Error ? error.message : JSON.stringify(error),
       status: "ERROR",
     };
   }

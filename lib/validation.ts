@@ -33,3 +33,38 @@ export const formSchema = z.object({
     }, "Invalid image URL"),
   pitch: z.string().min(10, "Pitch must be at least 10 characters"),
 });
+
+export const formProfileSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  username: z
+    .string()
+    .min(3, { message: "Username must be at least 3 characters" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  profile_title: z.string().optional(),
+  bio: z.string().optional(),
+  image: z
+    .string()
+    .url("Invalid URL format")
+    .refine(async (url) => {
+      try {
+        const res = await fetch(url, { method: "HEAD" });
+        const contentType = res.headers.get("content-type");
+        return contentType?.startsWith("image/");
+      } catch {
+        return false;
+      }
+    }, "Invalid image URL"),
+  cover_image: z
+    .string()
+    .url("Invalid URL format")
+    .refine(async (url) => {
+      try {
+        const res = await fetch(url, { method: "HEAD" });
+        const contentType = res.headers.get("content-type");
+        return contentType?.startsWith("image/");
+      } catch {
+        return false;
+      }
+    }, "Invalid image URL"),
+  status: z.enum(["student", "available_for_hiring", "available_to_work"]),
+});

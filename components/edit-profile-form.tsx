@@ -29,6 +29,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { editProfile } from "@/lib/actions";
 import { cn } from "@/lib/utils";
+import { formProfileSchema } from "@/lib/validation";
 import { Author } from "@/sanity/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Camera, Upload, X } from "lucide-react";
@@ -46,28 +47,8 @@ type Skill = {
 };
 
 // Define form schema with zod
-const formSchema = z.object({
-  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
-  username: z
-    .string()
-    .min(3, { message: "Username must be at least 3 characters" }),
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  profile_title: z.string().optional(),
-  bio: z.string().optional(),
-  image: z
-    .string()
-    .url({ message: "Please enter a valid URL" })
-    .optional()
-    .or(z.literal("")),
-  cover_image: z
-    .string()
-    .url({ message: "Please enter a valid URL" })
-    .optional()
-    .or(z.literal("")),
-  status: z.enum(["student", "available_for_hiring", "available_to_work"]),
-});
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof formProfileSchema>;
 
 export default function EditProfilePage({
   id,
@@ -76,26 +57,23 @@ export default function EditProfilePage({
   id: string;
   previousData: Author;
 }) {
-  // State for array fields
+  const router = useRouter();
   const [roleInput, setRoleInput] = useState("");
   const [roles, setRoles] = useState<string[]>(previousData.role || []);
-  // State for skills with images
   const [skillInput, setSkillInput] = useState("");
   const [skillImageUrl, setSkillImageUrl] = useState("");
-  const router = useRouter();
   const { username } = useParams();
   const [skills, setSkills] = useState<Skill[]>(
     previousData.skills?.map(({ _key, name, image }: any) => ({
-      _key, // Menjadikan _key sebagai id
+      _key,
       name,
-      image: image || "", // Pastikan tidak undefined
+      image: image || "",
     })) || []
   );
 
-  console.log("skills", skills);
   // Set up react-hook-form with zod validation
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(formProfileSchema),
     defaultValues: {
       name: previousData.name || "",
       username: previousData.username || "",
@@ -104,9 +82,11 @@ export default function EditProfilePage({
       bio: previousData.bio || "",
       image: previousData.image || "",
       cover_image: previousData.cover_image || "",
-      status: previousData.status || "student", // Tambahkan ini
+      status: previousData.status || "student",
     },
   });
+
+  const { isSubmitting } = form.formState;
 
   // Handle adding roles
   const handleAddRole = () => {
@@ -169,18 +149,16 @@ export default function EditProfilePage({
       formData.append("profile_title", data?.profile_title || "");
       formData.append("status", data?.status || "");
 
-      console.log(formData);
       const result = await editProfile(formData, id, skills, roles);
-      console.log(result);
-
+      console.log("result: ", result);
       if (result.status === "SUCCESS") {
         toast.success("Cool, you're done!");
-        router.push(`/u/${username}`);
+        router.push(`/u/${username}/`);
       } else {
         toast.error("Please check your input & try again!");
       }
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("An unexpected error occurred");
     }
   };
@@ -616,8 +594,13 @@ export default function EditProfilePage({
             <Button type="button" variant="outline" className="brutalism-btn">
               Cancel
             </Button>
-            <Button type="submit" variant={"amber"} className="brutalism-btn">
-              Save Profile
+            <Button
+              type="submit"
+              variant={"amber"}
+              className="brutalism-btn"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </div>
         </form>

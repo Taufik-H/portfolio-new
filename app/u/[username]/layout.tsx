@@ -2,6 +2,9 @@ import Navbar from "@/components/navbar";
 import { CURRENT_USER_BY_USERNAME } from "@/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { notFound } from "next/navigation";
+
+export const experimental_ppr = true;
+
 export default async function Layout({
   params,
   children,
