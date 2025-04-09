@@ -8,13 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { SanityLive } from "@/sanity/lib/live";
 import type { Author } from "@/sanity/types";
@@ -28,6 +22,7 @@ import {
 import Link from "next/link";
 import AuthButton from "./auth/auth-button";
 import { ModeToggle } from "./mode-toggle";
+import ShareModal from "./share-button";
 
 const NAVBAR_ITEMS = [
   {
@@ -102,10 +97,7 @@ const Navbar = async ({ user }: { user: Author }) => {
                 <MessageCircleMore size={20} />
               </Link>
             )}
-
-            <Button variant={"ghost"}>
-              <Share2 size={20} />
-            </Button>
+            {user.username && <ShareModal username={user.username} />}
 
             <ModeToggle />
 
@@ -187,11 +179,7 @@ const Navbar = async ({ user }: { user: Author }) => {
                 <MessageCircleMore size={18} className="sm:size-20" />
               </Link>
             )}
-
-            <Button variant={"ghost"} size={"icon"}>
-              <Share2 size={18} className="sm:size-20" />
-            </Button>
-
+            {user.username && <ShareModal username={user.username} />}
             <ModeToggle />
 
             <Sheet>
@@ -209,47 +197,33 @@ const Navbar = async ({ user }: { user: Author }) => {
                 className="border-l-2 border-black dark:border-neutral-600 shadow-[-4px_0px_0px_0px_rgba(0,0,0,0.1)] p-0 w-[75%] sm:max-w-sm"
               >
                 <div className="h-full flex flex-col p-6">
-                  <SheetHeader className="text-left mb-8">
-                    <SheetTitle className="text-xl font-bold">Menu</SheetTitle>
-                  </SheetHeader>
-
-                  <nav className="flex flex-col gap-4">
-                    {NAVBAR_ITEMS.map((item, index) => (
-                      <Link
-                        key={index}
-                        href={item.path}
-                        className="text-lg font-medium py-2 border-b border-neutral-200 dark:border-neutral-800 hover:text-[#FF8A00] transition-colors"
-                      >
-                        {item.lable}
-                      </Link>
-                    ))}
-                  </nav>
-
-                  <div className="mt-8 flex-grow">
+                  <div className="mt-8 mb-10">
                     {session && session?.user ? (
                       <>
-                        <div className="flex items-center gap-3 p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg mb-4">
-                          <Avatar className="w-10 h-10 border-2 border-black dark:border-neutral-600">
-                            <AvatarImage
-                              src={
-                                session?.user?.image ||
-                                "https://github.com/shadcn.png"
-                              }
-                              alt="User"
-                            />
-                            <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
-                              {session?.username?.charAt(0) || "P"}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <h3 className="font-semibold">
-                              {session?.username || "User"}
-                            </h3>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                              {session?.user.email}
-                            </p>
+                        <Link href={`/u/${session?.username}/`}>
+                          <div className="flex items-center gap-3 p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg mb-4 hover:bg-neutral-200 dark:hover:bg-neutral-900">
+                            <Avatar className="w-10 h-10 border-2 border-black dark:border-neutral-600">
+                              <AvatarImage
+                                src={
+                                  session?.user?.image ||
+                                  "https://github.com/shadcn.png"
+                                }
+                                alt="User"
+                              />
+                              <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
+                                {session?.username?.charAt(0) || "P"}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <h3 className="font-semibold">
+                                {session?.username || "User"}
+                              </h3>
+                              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                                {session?.user.email}
+                              </p>
+                            </div>
                           </div>
-                        </div>
+                        </Link>
 
                         {session?.id === user._id && (
                           <Link
@@ -271,6 +245,17 @@ const Navbar = async ({ user }: { user: Author }) => {
                       />
                     )}
                   </div>
+                  <nav className="flex flex-col gap-4">
+                    {NAVBAR_ITEMS.map((item, index) => (
+                      <Link
+                        key={index}
+                        href={item.path}
+                        className="text-lg font-medium py-2 border-b border-neutral-200 dark:border-neutral-800 hover:text-[#FF8A00] transition-colors"
+                      >
+                        {item.lable}
+                      </Link>
+                    ))}
+                  </nav>
 
                   {session && session?.user && (
                     <div className="mt-auto pt-4">

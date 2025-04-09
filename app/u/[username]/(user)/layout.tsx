@@ -21,7 +21,6 @@ export default async function Layout({
 
   return (
     <main>
-      <Navbar user={user} />
       <PublicProfile userData={user} key={user._id}>
         {children}
       </PublicProfile>

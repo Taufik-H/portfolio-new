@@ -142,3 +142,33 @@
 .brutalism-btn {
   @apply !border-2 !border-neutral-900  !p-3 dark:!shadow-neutral-700 dark:!border-neutral-700 !shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] shadow-neutral-900 cursor-pointer hover:!ring-0 hover:!ring-offset-0 hover:!translate-y-1 hover:!translate-x-1 hover:!shadow-none hover:!border-2;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.animate-enter {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-leave {
+  animation: fadeOut 0.3s ease-out;
+}
