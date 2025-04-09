@@ -37,7 +37,7 @@ const ProjectPage = async ({
               key={index}
               className={cn(
                 buttonVariants({ variant: "yellow", size: "sm" }),
-                "rounded-full"
+                "rounded-full mr-2"
               )}
             >
               {c}
