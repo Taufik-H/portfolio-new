@@ -31,17 +31,19 @@ const ProjectPage = async ({
   return (
     <div>
       <div className="mt-15">
-        {post.category.map((c: string, index: number) => (
-          <p
-            key={index}
-            className={cn(
-              buttonVariants({ variant: "yellow", size: "sm" }),
-              "rounded-full"
-            )}
-          >
-            {c}
-          </p>
-        ))}
+        <div className="flex flex-wrap justify-start items-start gap-2">
+          {post.category.map((c: string, index: number) => (
+            <p
+              key={index}
+              className={cn(
+                buttonVariants({ variant: "yellow", size: "sm" }),
+                "rounded-full"
+              )}
+            >
+              {c}
+            </p>
+          ))}
+        </div>
         <h1 className="text-2xl lg:text-4xl  font-semibold text-left text-amber-500 my-2">
           {post.title}
         </h1>
