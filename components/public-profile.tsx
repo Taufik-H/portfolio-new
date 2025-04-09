@@ -5,6 +5,7 @@ import { Mail, Share2, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button, buttonVariants } from "./ui/button";
+import ShareModal from "./share-button";
 
 export default async function PublicProfile({
   userData,
@@ -71,7 +72,7 @@ export default async function PublicProfile({
                 </Button>
                 {_id === session?.id && (
                   <Link
-                    href={`/u/${session?.username}/edit/profile`}
+                    href={`/u/${username}/edit/profile`}
                     className={cn(
                       buttonVariants({ variant: "outline" }),
                       "rounded-full brutalism-btn"
@@ -80,13 +81,7 @@ export default async function PublicProfile({
                     edit profile
                   </Link>
                 )}
-                <Button
-                  variant={"outline"}
-                  size={"icon"}
-                  className="rounded-full hidden md:flex  brutalism-btn"
-                >
-                  <Share2 />
-                </Button>
+                {username && <ShareModal username={username} />}
               </div>
             </div>
             <div className="relative order-1 md:order-2 mx-auto md:mx-0 max-w-[90%] sm:max-w-[80%] md:max-w-full">

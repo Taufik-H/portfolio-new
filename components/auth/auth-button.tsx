@@ -47,9 +47,7 @@ const AuthButton = async ({ icon, children, ...props }: AuthButtonProps) => {
       action={async () => {
         "use server";
         if (props.action === "signin") {
-          await signIn(props.provider || "credentials", {
-            redirectTo: `/`,
-          });
+          await signIn(props.provider || "credentials");
         } else {
           await signOut();
         }

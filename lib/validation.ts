@@ -53,9 +53,11 @@ export const formProfileSchema = z.object({
       } catch {
         return false;
       }
-    }, "Invalid image URL"),
+    }, "Invalid image URL")
+    .optional(),
   cover_image: z
     .string()
+
     .url("Invalid URL format")
     .refine(async (url) => {
       try {
@@ -65,6 +67,7 @@ export const formProfileSchema = z.object({
       } catch {
         return false;
       }
-    }, "Invalid image URL"),
+    }, "Invalid image URL")
+    .optional(),
   status: z.enum(["student", "available_for_hiring", "available_to_work"]),
 });
