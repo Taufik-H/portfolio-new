@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import CtaSection from "@/components/landing/cta-section";
 import FeatureSection from "@/components/landing/feature-section";
 import FooterSection from "@/components/landing/footer-section";
@@ -10,8 +9,6 @@ import StatisticSection from "@/components/landing/statistic-section";
 import { SanityLive } from "@/sanity/lib/live";
 
 export default async function LandingPage() {
-  const session = await auth();
-
   return (
     <div className="min-h-screen bg-[#FCFCFC] dark:bg-background">
       <NavbarSection />

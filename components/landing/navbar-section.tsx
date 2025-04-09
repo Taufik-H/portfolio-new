@@ -44,7 +44,100 @@ const NAVBAR_ITEMS = [
 const NavbarSection = async () => {
   const session = await auth();
   const id = session?.id;
-  console.log(session?.id);
+  if (!session) {
+    return (
+      <header className="fixed top-0 w-full bg-[#FCFCFC] dark:bg-background z-50 left-0 ">
+        <div className="section-container mx-auto px-4 sm:px-6 py-3 sm:py-4 md:py-5 flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-[#FF8A00] border-2 border-black dark:border-neutral-600 rounded-full flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+              <span className="text-black font-bold text-sm sm:text-base">
+                P
+              </span>
+            </div>
+            <span className="font-bold text-lg sm:text-xl">Portolity</span>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-6">
+            {NAVBAR_ITEMS.map((item, index) => (
+              <Link
+                key={index}
+                href={item.path}
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "font-medium"
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ModeToggle />
+            <div className="hidden lg:block">
+              <AuthButton
+                action="signin"
+                redirectToAuth={true}
+                className="hidden sm:flex bg-amber-500"
+              >
+                Login
+              </AuthButton>
+            </div>
+
+            {/* Mobile Menu */}
+            <div className="lg:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant={"amber"}
+                    size={"icon"}
+                    className="border-2 border-black dark:border-neutral-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
+                  >
+                    <AlignJustify size={18} className="sm:size-20" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent
+                  side="right"
+                  className="border-l-2 border-black dark:border-neutral-600 shadow-[-4px_0px_0px_0px_rgba(0,0,0,0.1)] p-0 w-[75%] sm:max-w-sm"
+                >
+                  <div className="h-full flex flex-col p-6">
+                    <SheetTitle className="my-5 font-bold text-neutral-500 uppercase">
+                      Menu
+                    </SheetTitle>
+
+                    <nav className="flex flex-col gap-4">
+                      {NAVBAR_ITEMS.map((item, index) => (
+                        <Link
+                          key={index}
+                          href={item.path}
+                          className="text-lg font-medium py-2 border-b border-neutral-200 dark:border-neutral-800 hover:text-[#FF8A00] transition-colors"
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </nav>
+
+                    <div className="mt-8 flex-grow">
+                      <AuthButton
+                        action="signin"
+                        redirectToAuth={true}
+                        className="w-full bg-amber-500"
+                      >
+                        Login
+                      </AuthButton>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
   const user = await client
     .withConfig({ useCdn: false })
     .fetch(CURRENT_USER_BY_SESSION_ID, {
@@ -159,7 +252,7 @@ const NavbarSection = async () => {
                 className="border-l-2 border-black dark:border-neutral-600 shadow-[-4px_0px_0px_0px_rgba(0,0,0,0.1)] p-0 w-[75%] sm:max-w-sm"
               >
                 <div className="h-full flex flex-col p-6">
-                  {session && (
+                  {session && user && (
                     <div className="mt-auto pt-10">
                       <Link
                         href={`/u/${user?.username}`}
@@ -203,7 +296,7 @@ const NavbarSection = async () => {
                   </nav>
 
                   <div className="mt-8 flex-grow">
-                    {!session && (
+                    {!session && !user && (
                       <AuthButton
                         action="signin"
                         redirectToAuth={true}
@@ -214,7 +307,7 @@ const NavbarSection = async () => {
                     )}
                   </div>
 
-                  {session && (
+                  {session && user && (
                     <div className="mt-auto pt-4">
                       <AuthButton
                         action="signout"

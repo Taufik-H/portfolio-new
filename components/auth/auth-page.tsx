@@ -1,3 +1,5 @@
+import { auth } from "@/auth";
+import AuthButton from "@/components/auth/auth-button";
 import {
   Card,
   CardContent,
@@ -6,15 +8,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CURRENT_USER_BY_SESSION_ID } from "@/lib/queries";
+import { client } from "@/sanity/lib/client";
 import { Github, Mail } from "lucide-react";
 import Link from "next/link";
-import AuthButton from "@/components/auth/auth-button";
-import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 
 export default async function AuthPage() {
   const session = await auth();
-  if (session) return redirect(`/`);
+  if (session) {
+    const id = session?.id;
+    const user = await client
+      .withConfig({ useCdn: false })
+      .fetch(CURRENT_USER_BY_SESSION_ID, {
+        id,
+      });
+    return redirect(`/u/${user.username}`);
+  }
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F5F5F5] dark:bg-neutral-900 p-4">
       <div className="w-full max-w-md mx-auto">

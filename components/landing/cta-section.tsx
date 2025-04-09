@@ -25,7 +25,7 @@ const CtaSection = () => {
                   asChild
                   className="px-6 sm:px-8 py-2.5 sm:py-3 bg-[#FF8A00] border-2 border-black dark:border-neutral-600 rounded-md font-bold text-sm sm:text-base shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] sm:hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all"
                 >
-                  <Link href="/signup">Create Your Portfolio</Link>
+                  <Link href="/auth">Create Your Portfolio</Link>
                 </Button>
                 <Button
                   variant="outline"

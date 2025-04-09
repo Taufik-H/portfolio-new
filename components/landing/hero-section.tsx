@@ -1,8 +1,9 @@
-import { auth, signIn } from "@/auth";
+import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, buttonVariants } from "../ui/button";
+import AuthButton from "../auth/auth-button";
+import { buttonVariants } from "../ui/button";
 
 const Hero = async () => {
   const session = await auth();
@@ -25,40 +26,18 @@ const Hero = async () => {
               brand with our all-in-one portfolio platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
-              {session && session.id ? (
-                <div className="flex gap-2 items-center w-full sm:w-auto">
-                  <Link
-                    href={`/u/${session.username}`}
-                    className={cn(
-                      buttonVariants({ variant: "amber" }),
-                      "rounded-full w-full sm:w-auto justify-center"
-                    )}
-                  >
-                    Create Your Portfolio
-                  </Link>
-                </div>
-              ) : (
-                <form
-                  action={async () => {
-                    "use server";
-                    await signIn("github");
-                  }}
-                  className="w-full sm:w-auto"
-                >
-                  <Button
-                    type="submit"
-                    variant={"amber"}
-                    className="w-full sm:w-auto rounded-full"
-                  >
-                    Create Your Portfolio
-                  </Button>
-                </form>
-              )}
+              <AuthButton
+                action="signin"
+                redirectToAuth={true}
+                className="bg-amber-500 rounded-full"
+              >
+                Create Your Portfolio
+              </AuthButton>
 
               <Link
                 className={cn(
                   buttonVariants({ variant: "outline" }),
-                  "w-full sm:w-auto justify-center rounded-full"
+                  "w-full sm:w-auto justify-center rounded-full brutalism-btn"
                 )}
                 href="#testimonials"
               >
