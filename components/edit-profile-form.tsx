@@ -62,7 +62,6 @@ export default function EditProfilePage({
   const [roles, setRoles] = useState<string[]>(previousData.role || []);
   const [skillInput, setSkillInput] = useState("");
   const [skillImageUrl, setSkillImageUrl] = useState("");
-  const { username } = useParams();
   const [skills, setSkills] = useState<Skill[]>(
     previousData.skills?.map(({ _key, name, image }: any) => ({
       _key,
@@ -150,10 +149,10 @@ export default function EditProfilePage({
       formData.append("status", data?.status || "");
 
       const result = await editProfile(formData, id, skills, roles);
-      console.log("result: ", result);
       if (result.status === "SUCCESS") {
+        // console.log("result: ", result.data.username);
         toast.success("Cool, you're done!");
-        router.push(`/u/${username}/`);
+        router.push(`/u/${result.data.username}/`);
       } else {
         toast.error("Please check your input & try again!");
       }

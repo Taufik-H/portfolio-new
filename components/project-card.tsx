@@ -17,7 +17,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
   const isNew = defineNewProduct(_createdAt);
   const pathname = usePathname();
   return (
-    <li className="brutalism-border brutalism-hover transition-all duration-300 ease-in-out dark:hover:bg-neutral-900  group">
+    <div className="brutalism-border brutalism-hover transition-all duration-300 ease-in-out dark:hover:bg-neutral-900  group">
       <div className="flex justify-between items-center mb-2">
         <div className="flex gap-2 items-center">
           {category?.slice(0, 1).map((c, i) => (
@@ -95,7 +95,7 @@ const ProjectCard = ({ post }: { post: ProjectCardType }) => {
       >
         Details
       </Link>
-    </li>
+    </div>
   );
 };
 

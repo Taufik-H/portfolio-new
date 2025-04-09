@@ -21,7 +21,6 @@ export default async function User({
     <>
       <section className="flex justify-between items-center lg:mt-10">
         <h4 className="font-bold text-neutral-500 tracking-widest">PROJECTS</h4>
-        {/* <SearchForm query={query} username={username} /> */}
       </section>
       <section>
         {projects.length > 0 ? (
