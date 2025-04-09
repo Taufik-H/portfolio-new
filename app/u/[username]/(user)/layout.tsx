@@ -1,4 +1,3 @@
-import Navbar from "@/components/navbar";
 import PublicProfile from "@/components/public-profile";
 import { CURRENT_USER_BY_USERNAME } from "@/lib/queries";
 import { client } from "@/sanity/lib/client";

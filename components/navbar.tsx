@@ -17,30 +17,24 @@ import {
 import { cn } from "@/lib/utils";
 import { SanityLive } from "@/sanity/lib/live";
 import type { Author } from "@/sanity/types";
-import {
-  AlignJustify,
-  Ellipsis,
-  LogOut,
-  MessageCircleMore,
-} from "lucide-react";
+import { AlignJustify, Ellipsis, LogOut } from "lucide-react";
 import Link from "next/link";
 import AuthButton from "./auth/auth-button";
 import { ModeToggle } from "./mode-toggle";
 import ShareModal from "./share-button";
 
-const NAVBAR_ITEMS = [
-  {
-    lable: "Blog",
-    path: "/blog",
-  },
-  {
-    lable: "About",
-    path: "/about",
-  },
-];
-
 const Navbar = async ({ user }: { user: Author }) => {
   const session = await auth();
+  const NAVBAR_ITEMS = [
+    // {
+    //   lable: "Blog",
+    //   path: "/blog",
+    // },
+    {
+      lable: "About",
+      path: `/u/${user.username}/about`,
+    },
+  ];
   const statusLabels = {
     student: "Student",
     available_for_hiring: "Available for Hiring",
@@ -93,7 +87,7 @@ const Navbar = async ({ user }: { user: Author }) => {
               </Link>
             ))}
 
-            {session?.id === user._id && (
+            {/* {session?.id === user._id && (
               <Link
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" }),
@@ -103,7 +97,7 @@ const Navbar = async ({ user }: { user: Author }) => {
               >
                 <MessageCircleMore size={20} />
               </Link>
-            )}
+            )} */}
             {user.username && <ShareModal username={user.username} />}
 
             <ModeToggle />
@@ -176,7 +170,7 @@ const Navbar = async ({ user }: { user: Author }) => {
 
           {/* Mobile Navigation */}
           <div className="flex gap-1 sm:gap-2 items-center lg:hidden">
-            {session?.id === user._id && (
+            {/* {session?.id === user._id && (
               <Link
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "icon" })
@@ -185,7 +179,7 @@ const Navbar = async ({ user }: { user: Author }) => {
               >
                 <MessageCircleMore size={18} />
               </Link>
-            )}
+            )} */}
             {user.username && <ShareModal username={user.username} />}
             <ModeToggle />
 
