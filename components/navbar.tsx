@@ -27,7 +27,6 @@ import Link from "next/link";
 import AuthButton from "./auth/auth-button";
 import { ModeToggle } from "./mode-toggle";
 import ShareModal from "./share-button";
-import { Separator } from "./ui/separator";
 
 const NAVBAR_ITEMS = [
   {

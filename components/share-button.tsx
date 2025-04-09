@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Copy, Facebook, Twitter, Linkedin, Share2, Mail } from "lucide-react";
 import { TbBrandTelegram } from "react-icons/tb";
 import { FaWhatsapp } from "react-icons/fa";
@@ -25,8 +25,17 @@ import {
 } from "@/components/ui/drawer";
 import { useMediaQuery } from "usehooks-ts";
 import { cn } from "@/lib/utils";
+import { VariantProps } from "class-variance-authority";
 
-const ShareModal = ({ username }: { username: string }) => {
+const ShareModal = ({
+  username,
+  variant,
+  className,
+}: {
+  username: string;
+  className?: string;
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+}) => {
   const [shareUrl, setShareUrl] = useState("");
   const [open, setOpen] = useState(false);
   const [isClient, setIsClient] = useState(false); // 🔹 Untuk mencegah hydration error
@@ -93,14 +102,14 @@ const ShareModal = ({ username }: { username: string }) => {
   const ShareContent = (
     <div className="flex flex-col gap-4">
       {/* Scrollable Icons */}
-      <div className="flex gap-4 overflow-x-auto no-scrollbar p-2">
+      <div className="flex gap-4 overflow-x-auto no-scrollbar p-2  py-4">
         {sharePlatforms.map((platform, index) => (
           <a
             key={index}
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-12 h-12 border rounded-full hover:bg-gray-100 transition"
+            className="flex items-center justify-center w-12 h-12 brutalism-btn rounded-full transition-all duration-200 hover:bg-neutral-200 dark:hover:bg-background"
           >
             {platform.icon}
           </a>
@@ -110,7 +119,11 @@ const ShareModal = ({ username }: { username: string }) => {
       {/* Copy Link */}
       <div className="flex items-center justify-between border p-2 rounded-lg">
         <span className="truncate">{shareUrl}</span>
-        <Button variant="ghost" size="icon" onClick={copyToClipboard}>
+        <Button
+          variant={variant ?? "ghost"}
+          size="icon"
+          onClick={copyToClipboard}
+        >
           <Copy size={20} />
         </Button>
       </div>
@@ -122,7 +135,7 @@ const ShareModal = ({ username }: { username: string }) => {
   return isDesktop ? (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost">
+        <Button variant={variant ?? "ghost"} className={cn(className)}>
           <Share2 size={20} />
         </Button>
       </DialogTrigger>
@@ -136,7 +149,7 @@ const ShareModal = ({ username }: { username: string }) => {
   ) : (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="ghost">
+        <Button variant={variant ?? "ghost"} className={cn(className)}>
           <Share2 size={20} />
         </Button>
       </DrawerTrigger>
@@ -147,7 +160,7 @@ const ShareModal = ({ username }: { username: string }) => {
         <div className="px-4">{ShareContent}</div>
         <div className="p-4">
           <DrawerClose asChild>
-            <Button variant="outline" className="w-full">
+            <Button variant="brutalism" className="w-full">
               Close
             </Button>
           </DrawerClose>

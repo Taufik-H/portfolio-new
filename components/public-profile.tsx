@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
 import { cn } from "@/lib/utils";
 import { Author } from "@/sanity/types";
-import { Mail, Share2, User } from "lucide-react";
+import { Mail, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, buttonVariants } from "./ui/button";
 import ShareModal from "./share-button";
+import { Button, buttonVariants } from "./ui/button";
 
 export default async function PublicProfile({
   userData,
@@ -81,7 +81,13 @@ export default async function PublicProfile({
                     edit profile
                   </Link>
                 )}
-                {username && <ShareModal username={username} />}
+                {username && (
+                  <ShareModal
+                    username={username}
+                    variant={"brutalism"}
+                    className="rounded-full"
+                  />
+                )}
               </div>
             </div>
             <div className="relative order-1 md:order-2 mx-auto md:mx-0 max-w-[90%] sm:max-w-[80%] md:max-w-full">
