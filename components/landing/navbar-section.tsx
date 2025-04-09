@@ -9,17 +9,18 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { CURRENT_USER_BY_SESSION_ID } from "@/lib/queries";
+import { cn } from "@/lib/utils";
+import { client } from "@/sanity/lib/client";
 import { AlignJustify, LogOut } from "lucide-react";
 import Link from "next/link";
 import AuthButton from "../auth/auth-button";
 import { ModeToggle } from "../mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button, buttonVariants } from "../ui/button";
-import { cn } from "@/lib/utils";
 
 const NAVBAR_ITEMS = [
   {
@@ -42,12 +43,19 @@ const NAVBAR_ITEMS = [
 
 const NavbarSection = async () => {
   const session = await auth();
+  const id = session?.id;
+  console.log(session?.id);
+  const user = await client
+    .withConfig({ useCdn: false })
+    .fetch(CURRENT_USER_BY_SESSION_ID, {
+      id,
+    });
   return (
     <header className="fixed top-0 w-full bg-[#FCFCFC] dark:bg-background z-50 left-0 ">
       <div className="section-container mx-auto px-4 sm:px-6 py-3 sm:py-4 md:py-5 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="h-8 h-8 sm:h-10 sm:w-10 bg-[#FF8A00] border-2 border-black dark:border-neutral-600 rounded-full flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+          <div className="h-8 w-8 sm:h-10 sm:w-10 bg-[#FF8A00] border-2 border-black dark:border-neutral-600 rounded-full flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
             <span className="text-black font-bold text-sm sm:text-base">P</span>
           </div>
           <span className="font-bold text-lg sm:text-xl">Portolity</span>
@@ -72,71 +80,67 @@ const NavbarSection = async () => {
         {/* Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
           <ModeToggle />
-
-          {session ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-black dark:border-neutral-600 cursor-pointer">
-                  <AvatarImage
-                    src={
-                      session?.user?.image || "https://github.com/shadcn.png"
-                    }
-                    alt={session?.username || "User"}
-                  />
-                  <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
-                    {session?.username?.charAt(0) || "P"}
-                  </AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="border-2 border-black dark:border-neutral-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <DropdownMenuLabel>
-                  <div className="flex gap-2 items-center">
-                    <Avatar className="w-5 h-5 border border-black dark:border-neutral-600">
-                      <AvatarImage
-                        src={
-                          session?.user?.image ||
-                          "https://github.com/shadcn.png"
-                        }
-                        alt="portolity"
-                      />
-                      <AvatarFallback className="bg-[#FF8A00] text-black text-xs font-bold">
-                        {session?.username?.charAt(0) || "P"}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <h1 className="text-sm font-semibold">
-                        <Link href={`/u/${session?.username}`}>
-                          {session?.username || "Portify"}
-                        </Link>
-                      </h1>
-                      <p className="text-neutral-500 dark:text-neutral-400 font-medium text-xs">
-                        {session?.user?.email}
-                      </p>
+          <div className="hidden lg:block">
+            {session ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="w-8 h-8 sm:w-10 sm:h-10 border-2 border-black dark:border-neutral-600 cursor-pointer">
+                    <AvatarImage
+                      src={user?.image || "https://github.com/shadcn.png"}
+                      alt={user?.username || "User"}
+                    />
+                    <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
+                      {user?.username?.charAt(0) || "P"}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="border-2 border-black dark:border-neutral-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <DropdownMenuLabel>
+                    <div className="flex gap-2 items-center hover:bg-neutral-100 dark:hover:bg-neutral-900 cursor-pointer transition-all duration-200 p-2 rounded">
+                      <Avatar className="w-8 h-8 border border-black dark:border-neutral-600">
+                        <AvatarImage
+                          src={user?.image || "https://github.com/shadcn.png"}
+                          alt="portolity"
+                        />
+                        <AvatarFallback className="bg-[#FF8A00] text-black text-xs font-bold">
+                          {user?.username?.charAt(0) || "P"}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <h1 className="text-sm font-semibold">
+                          <Link href={`/u/${user?.username}`}>
+                            {user?.username || "Portify"}
+                          </Link>
+                        </h1>
+                        <p className="text-neutral-500 dark:text-neutral-400 font-medium text-xs">
+                          {user?.email}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
 
-                <div className="p-2">
-                  <AuthButton
-                    action="signout"
-                    icon={<LogOut size={16} className="mr-2" />}
-                    className="w-full justify-start"
-                  >
-                    Logout
-                  </AuthButton>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <AuthButton
-              action="signin"
-              redirectToAuth={true}
-              className="hidden sm:flex"
-            >
-              Login
-            </AuthButton>
-          )}
+                  <div className="p-2">
+                    <AuthButton
+                      action="signout"
+                      icon={<LogOut size={16} className="mr-2" />}
+                      className="w-full justify-start"
+                    >
+                      Logout
+                    </AuthButton>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <AuthButton
+                action="signin"
+                redirectToAuth={true}
+                className="hidden sm:flex"
+              >
+                Login
+              </AuthButton>
+            )}
+          </div>
 
           {/* Mobile Menu */}
           <div className="lg:hidden">
@@ -155,9 +159,36 @@ const NavbarSection = async () => {
                 className="border-l-2 border-black dark:border-neutral-600 shadow-[-4px_0px_0px_0px_rgba(0,0,0,0.1)] p-0 w-[75%] sm:max-w-sm"
               >
                 <div className="h-full flex flex-col p-6">
-                  <SheetHeader className="text-left mb-8">
-                    <SheetTitle className="text-xl font-bold">Menu</SheetTitle>
-                  </SheetHeader>
+                  {session && (
+                    <div className="mt-auto pt-10">
+                      <Link
+                        href={`/u/${user?.username}`}
+                        className="flex items-center gap-3 p-3 brutalism-btn transition-all duration-200 rounded-lg mb-4"
+                      >
+                        <Avatar className="w-10 h-10 border-2 border-black dark:border-neutral-600">
+                          <AvatarImage
+                            src={user?.image || "https://github.com/shadcn.png"}
+                            alt="User"
+                          />
+                          <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
+                            {user.username?.charAt(0) || "P"}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <h3 className="font-semibold">
+                            {user.username || "User"}
+                          </h3>
+                          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                            {user?.email}
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
+                  )}
+
+                  <SheetTitle className="my-5 font-bold text-neutral-500 uppercase">
+                    Menu
+                  </SheetTitle>
 
                   <nav className="flex flex-col gap-4">
                     {NAVBAR_ITEMS.map((item, index) => (
@@ -185,29 +216,6 @@ const NavbarSection = async () => {
 
                   {session && (
                     <div className="mt-auto pt-4">
-                      <div className="flex items-center gap-3 p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg mb-4">
-                        <Avatar className="w-10 h-10 border-2 border-black dark:border-neutral-600">
-                          <AvatarImage
-                            src={
-                              session?.user?.image ||
-                              "https://github.com/shadcn.png"
-                            }
-                            alt="User"
-                          />
-                          <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
-                            {session?.username?.charAt(0) || "P"}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <h3 className="font-semibold">
-                            {session?.username || "User"}
-                          </h3>
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                            {session?.user?.email}
-                          </p>
-                        </div>
-                      </div>
-
                       <AuthButton
                         action="signout"
                         icon={<LogOut size={16} className="mr-2" />}

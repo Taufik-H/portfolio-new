@@ -21,10 +21,10 @@ export default async function PublicProfile({
     <>
       <div className="flex flex-col gap-5 py-10">
         <section className="mx-auto w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center ">
-            <div className="space-y-4 sm:space-y-6  order-2 md:order-1 text-center md:text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center ">
+            <div className="space-y-4 sm:space-y-6  order-2 lg:order-1 text-center lg:text-left">
               {/* role */}
-              <div className="flex gap-2 items-center text-xs md:text-base text-center md:text-left justify-center md:justify-normal">
+              <div className="flex gap-2 items-center text-xs md:text-base text-center lg:text-left justify-center lg:justify-normal">
                 {role && role.length > 0 ? (
                   role.map((r, index) => (
                     <div key={index} className="flex items-center gap-2">
@@ -51,7 +51,7 @@ export default async function PublicProfile({
                   "If you are logged in using GitHub, this bio will be displayed. If you are using Google, you will have to set it manually."}
               </p>
               {/* contact */}
-              <div className="flex gap-5 items-center text-neutral-500 mt-5 justify-center md:justify-normal">
+              <div className="flex gap-5 items-center text-neutral-500 mt-5 justify-center lg:justify-normal">
                 <div className="flex items-center gap-2 text-xs md:text-base">
                   <Mail size={20} /> {email}
                 </div>
@@ -62,7 +62,7 @@ export default async function PublicProfile({
               {/* social */}
               <div className="flex"></div>
               {/* button */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 justify-center lg:justify-normal">
                 <Button
                   variant={"amber"}
                   className="rounded-full  brutalism-btn"
@@ -89,7 +89,7 @@ export default async function PublicProfile({
                 </Button>
               </div>
             </div>
-            <div className="relative order-1 md:order-2 mx-auto md:mx-0 max-w-[90%] sm:max-w-[80%] md:max-w-full">
+            <div className="relative order-1 lg:order-2 mx-auto  max-w-[90%] sm:max-w-[80%] md:max-w-full">
               <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 md:-top-6 md:-left-6 w-full h-full bg-[#E0F7FA] dark:bg-neutral-500 border-2 border-black rounded-xl sm:rounded-2xl"></div>
               <div className="relative border-2 border-black rounded-xl sm:rounded-2xl overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] aspect-[4/3]">
                 <Image

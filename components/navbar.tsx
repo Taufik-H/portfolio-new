@@ -8,7 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { SanityLive } from "@/sanity/lib/live";
 import type { Author } from "@/sanity/types";
@@ -17,12 +22,12 @@ import {
   Ellipsis,
   LogOut,
   MessageCircleMore,
-  Share2,
 } from "lucide-react";
 import Link from "next/link";
 import AuthButton from "./auth/auth-button";
 import { ModeToggle } from "./mode-toggle";
 import ShareModal from "./share-button";
+import { Separator } from "./ui/separator";
 
 const NAVBAR_ITEMS = [
   {
@@ -91,7 +96,10 @@ const Navbar = async ({ user }: { user: Author }) => {
 
             {session?.id === user._id && (
               <Link
-                className={cn(buttonVariants({ variant: "ghost" }))}
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "icon" }),
+                  "font-medium"
+                )}
                 href={"/messages"}
               >
                 <MessageCircleMore size={20} />
@@ -118,10 +126,10 @@ const Navbar = async ({ user }: { user: Author }) => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button size={"icon"} variant={"ghost"}>
-                      <Ellipsis />
+                      <Ellipsis size={20} />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="border-2 border-black dark:border-neutral-600 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <DropdownMenuContent className="brutalism-border">
                     <DropdownMenuLabel>
                       <div className="flex gap-2 items-center">
                         <Avatar className="w-5 h-5 border border-black dark:border-neutral-600">
@@ -176,7 +184,7 @@ const Navbar = async ({ user }: { user: Author }) => {
                 )}
                 href={"/messages"}
               >
-                <MessageCircleMore size={18} className="sm:size-20" />
+                <MessageCircleMore size={18} />
               </Link>
             )}
             {user.username && <ShareModal username={user.username} />}
@@ -189,7 +197,7 @@ const Navbar = async ({ user }: { user: Author }) => {
                   size={"icon"}
                   className="border-2 border-black dark:border-neutral-600 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all"
                 >
-                  <AlignJustify size={18} className="sm:size-20" />
+                  <AlignJustify size={18} />
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -201,14 +209,13 @@ const Navbar = async ({ user }: { user: Author }) => {
                     {session && session?.user ? (
                       <>
                         <Link href={`/u/${session?.username}/`}>
-                          <div className="flex items-center gap-3 p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg mb-4 hover:bg-neutral-200 dark:hover:bg-neutral-900">
+                          <div className="flex items-center gap-3 p-3 brutalism-btn rounded-lg mb-5 dark:hover:bg-background hover:bg-neutral-200 transition-all duration-300">
                             <Avatar className="w-10 h-10 border-2 border-black dark:border-neutral-600">
                               <AvatarImage
                                 src={
-                                  session?.user?.image ||
-                                  "https://github.com/shadcn.png"
+                                  user?.image || "https://github.com/shadcn.png"
                                 }
-                                alt="User"
+                                alt={session?.username || "user"}
                               />
                               <AvatarFallback className="bg-[#FF8A00] text-black font-bold">
                                 {session?.username?.charAt(0) || "P"}
@@ -246,6 +253,10 @@ const Navbar = async ({ user }: { user: Author }) => {
                     )}
                   </div>
                   <nav className="flex flex-col gap-4">
+                    <SheetTitle className="uppercase text-neutral-500">
+                      Menu
+                    </SheetTitle>
+
                     {NAVBAR_ITEMS.map((item, index) => (
                       <Link
                         key={index}

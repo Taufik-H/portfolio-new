@@ -11,7 +11,7 @@ import { SanityLive } from "@/sanity/lib/live";
 
 export default async function LandingPage() {
   const session = await auth();
-  console.log(session?.id);
+
   return (
     <div className="min-h-screen bg-[#FCFCFC] dark:bg-background">
       <NavbarSection />
