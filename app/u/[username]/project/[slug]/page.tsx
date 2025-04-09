@@ -31,14 +31,17 @@ const ProjectPage = async ({
   return (
     <div>
       <div className="mt-15">
-        <p
-          className={cn(
-            buttonVariants({ variant: "yellow", size: "sm" }),
-            "rounded-full"
-          )}
-        >
-          {post.category}
-        </p>
+        {post.category.map((c: string, index: number) => (
+          <p
+            key={index}
+            className={cn(
+              buttonVariants({ variant: "yellow", size: "sm" }),
+              "rounded-full"
+            )}
+          >
+            {c}
+          </p>
+        ))}
         <h1 className="text-2xl lg:text-4xl  font-semibold text-left text-amber-500 my-2">
           {post.title}
         </h1>
