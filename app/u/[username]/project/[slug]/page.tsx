@@ -7,6 +7,7 @@ import { cn, formatDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { AlarmClock } from "lucide-react";
 import markdownit from "markdown-it";
+import markdownItAnchor from "markdown-it-anchor";
 import { Fredoka } from "next/font/google";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -23,7 +24,8 @@ const ProjectPage = async ({
   const post = await client.fetch(PROJECT_BY_SLUG_QUERY, { slug });
 
   if (!post) return notFound();
-  const md = markdownit();
+  const md = new markdownit();
+
   const parsedContent = md.render(post.pitch || "");
 
   return (
@@ -66,9 +68,9 @@ const ProjectPage = async ({
           </div>
         </div>
         <div className="flex items-end md:items-center justify-end md:gap-5 flex-col md:flex-row">
-          <Suspense fallback={<Skeleton className="w-10 h-5 rounded" />}>
+          {/* <Suspense fallback={<Skeleton className="w-10 h-5 rounded" />}>
             <PostView id={post._id} />
-          </Suspense>
+          </Suspense> */}
           <div className="text-neutral-400 font-medium flex gap-2  items-center text-xs md:text-base lg:text-lg">
             <AlarmClock size={15} strokeWidth={3} />{" "}
             {formatDate(new Date(post._createdAt))}
@@ -76,15 +78,18 @@ const ProjectPage = async ({
         </div>
       </div>
       <hr className="my-10 divide-neutral-500" />
-      <div className="my-10">
+      <div className="my-10 w-full">
         {parsedContent ? (
           <div
             className={cn(
               fredoka.className,
-              "prose max-w-3xl break-all   dark:prose-neutral dark:prose-headings:text-neutral-50 prose-a:text-amber-500 dark:prose-p:text-white dark:prose-strong:text-white prose-a:decoration-0 prose-"
+              "prose w-full max-w-none break-all dark:prose-neutral dark:prose-headings:text-neutral-50 prose-a:text-amber-500 dark:prose-p:text-white dark:prose-strong:text-white prose-a:decoration-0"
             )}
           >
-            <article dangerouslySetInnerHTML={{ __html: parsedContent }} />
+            <article
+              dangerouslySetInnerHTML={{ __html: parsedContent }}
+              className="w-full"
+            />
           </div>
         ) : (
           <p className="text-neutral-400 font-bold text-2xl my-50">

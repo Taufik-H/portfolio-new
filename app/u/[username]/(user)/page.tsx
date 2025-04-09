@@ -24,14 +24,11 @@ export default async function User({
       </section>
       <section>
         {projects.length > 0 ? (
-          projects.map((project: ProjectCardType) => (
-            <div
-              key={project?._id}
-              className="mt-7 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-5"
-            >
-              <ProjectCard post={project} />
-            </div>
-          ))
+          <div className="mt-7 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-5">
+            {projects.map((project: ProjectCardType) => (
+              <ProjectCard key={project._id} post={project} />
+            ))}
+          </div>
         ) : (
           <EmptyState
             currentUser={username}
