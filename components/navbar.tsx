@@ -15,7 +15,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { SanityLive } from "@/sanity/lib/live";
 import type { Author } from "@/sanity/types";
 import { AlignJustify, Ellipsis, LogOut } from "lucide-react";
 import Link from "next/link";
@@ -278,7 +277,6 @@ const Navbar = async ({ user }: { user: Author }) => {
           </div>
         </div>
       </div>
-      <SanityLive />
     </>
   );
 };

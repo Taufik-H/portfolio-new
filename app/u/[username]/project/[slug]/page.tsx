@@ -7,7 +7,6 @@ import { cn, formatDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { AlarmClock } from "lucide-react";
 import markdownit from "markdown-it";
-import markdownItAnchor from "markdown-it-anchor";
 import { Fredoka } from "next/font/google";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -73,9 +72,9 @@ const ProjectPage = async ({
           </div>
         </div>
         <div className="flex items-end md:items-center justify-end md:gap-5 flex-col md:flex-row">
-          {/* <Suspense fallback={<Skeleton className="w-10 h-5 rounded" />}>
+          <Suspense fallback={<Skeleton className="w-10 h-5 rounded" />}>
             <PostView id={post._id} />
-          </Suspense> */}
+          </Suspense>
           <div className="text-neutral-400 font-medium flex gap-2  items-center text-xs md:text-base lg:text-lg">
             <AlarmClock size={15} strokeWidth={3} />{" "}
             {formatDate(new Date(post._createdAt))}

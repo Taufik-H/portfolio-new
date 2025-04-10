@@ -1,27 +1,36 @@
 "use client";
-import { useEffect, useState, type KeyboardEvent } from "react";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button, buttonVariants } from "@/components/ui/button";
-import MDEditor from "@uiw/react-md-editor";
-import { useTheme } from "next-themes";
-import { formSchema } from "@/lib/validation";
-import type { z } from "zod";
-import toast from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
-import { createProject } from "@/lib/actions";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "lucide-react";
+import { editProject } from "@/lib/actions";
 import { cn } from "@/lib/utils";
+import { formSchema } from "@/lib/validation";
+import { Project } from "@/sanity/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import MDEditor from "@uiw/react-md-editor";
+import { X } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState, type KeyboardEvent } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import type { z } from "zod";
 
-const ProjectForm = () => {
-  const [pitch, setPitch] = useState("");
+const EditProjectForm = ({ previousData }: { previousData: Project }) => {
+  const {
+    title,
+    description,
+    category,
+    image,
+    pitch: pitch_desc,
+    _id,
+  } = previousData;
+  const [pitch, setPitch] = useState(pitch_desc || "");
   const { theme } = useTheme();
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const [categoryInput, setCategoryInput] = useState("");
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>(category || []);
   const { username } = useParams();
   console.log(categories.length);
   const {
@@ -32,10 +41,10 @@ const ProjectForm = () => {
   } = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: title || "",
+      description: description || "",
       category: [],
-      link: "",
+      link: image || "",
       pitch: "",
     },
   });
@@ -78,11 +87,11 @@ const ProjectForm = () => {
       formData.append("description", data.description);
       formData.append("link", data.link);
 
-      const result = await createProject(formData, pitch, categories);
+      const result = await editProject(formData, pitch, categories, _id);
       console.log(result);
 
       if (result.status === "SUCCESS") {
-        toast.success("Cool, you're done!");
+        toast.success("Success edit!");
         router.push(`/u/${username}/project/${result.slug.current}`);
       } else {
         toast.error("Please check your input & try again!");
@@ -95,8 +104,8 @@ const ProjectForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex gap-4 items-center mb-8 ">
-        <Button onClick={() => router.back()} variant="brutalism">
+      <div className="flex gap-4 items-center my-8 ">
+        <Button type="button" onClick={() => router.back()} variant="brutalism">
           Back
         </Button>
         <h2 className=" font-black  text-center">Edit Project</h2>
@@ -248,4 +257,4 @@ const ProjectForm = () => {
   );
 };
 
-export default ProjectForm;
+export default EditProjectForm;

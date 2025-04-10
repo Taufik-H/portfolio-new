@@ -1,8 +1,10 @@
+import { auth } from "@/auth";
 import ProjectCard, { ProjectCardType } from "@/components/project-card";
 import { EmptyState } from "@/components/ui/enpty-state";
 import { PROJECT_BY_USER_QUERY } from "@/lib/queries";
 import { client } from "@/sanity/lib/client";
-export const experimental_ppr = true;
+import { SanityLive } from "@/sanity/lib/live";
+
 export default async function User({
   searchParams,
   params,
@@ -10,12 +12,16 @@ export default async function User({
   searchParams: Promise<{ query?: string }>;
   params: Promise<{ username: string }>;
 }) {
+  const session = await auth();
+  const sessionId = session?.id;
   const query = (await searchParams).query;
   const username = (await params).username;
-  const projects = await client.fetch(PROJECT_BY_USER_QUERY, {
-    username,
-    search: query || null,
-  });
+  const projects = await client
+    .withConfig({ useCdn: false })
+    .fetch(PROJECT_BY_USER_QUERY, {
+      username,
+      search: query || null,
+    });
 
   return (
     <>
@@ -26,7 +32,11 @@ export default async function User({
         {projects.length > 0 ? (
           <div className="mt-7 grid md:grid-cols-2 grid-cols-1 lg:grid-cols-4 gap-5">
             {projects.map((project: ProjectCardType) => (
-              <ProjectCard key={project._id} post={project} />
+              <ProjectCard
+                key={project._id}
+                post={project}
+                sessionId={sessionId}
+              />
             ))}
           </div>
         ) : (
@@ -41,6 +51,7 @@ export default async function User({
           />
         )}
       </section>
+      <SanityLive />
     </>
   );
 }
