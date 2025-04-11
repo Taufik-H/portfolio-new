@@ -82,6 +82,38 @@ export const createProject = async (
     });
   }
 };
+export const createAbout = async (about_description: string) => {
+  const session = await auth();
+  if (!session)
+    return parseServerActionResponse({
+      error: "Not signed in",
+      status: "ERROR",
+    });
+
+  try {
+    const about = {
+      author: {
+        _type: "reference",
+        _ref: session?.id,
+      },
+      about_description,
+    };
+
+    const result = await writeClient.create({ _type: "about", ...about });
+
+    return parseServerActionResponse({
+      ...result,
+      error: "",
+      status: "SUCCESS",
+    });
+  } catch (error) {
+    console.log(error);
+    return parseServerActionResponse({
+      error: JSON.stringify(error),
+      status: "ERROR",
+    });
+  }
+};
 export const editProject = async (
   form: FormData,
   pitch: string,

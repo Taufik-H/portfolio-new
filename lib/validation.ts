@@ -33,6 +33,11 @@ export const formSchema = z.object({
     }, "Invalid image URL"),
   pitch: z.string().min(10, "Pitch must be at least 10 characters"),
 });
+export const aboutSchema = z.object({
+  about_description: z
+    .string()
+    .min(10, "Description must be at least 10 characters"),
+});
 
 export const formProfileSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
@@ -41,7 +46,7 @@ export const formProfileSchema = z.object({
     .min(3, { message: "Username must be at least 3 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   profile_title: z.string().optional(),
-  bio: z.string().optional(),
+  bio: z.string().optional().optional(),
   image: z
     .string()
     .url("Invalid URL format")

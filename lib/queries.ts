@@ -112,3 +112,17 @@ export const PROJECT_BY_USER_QUERY = defineQuery(
       image
     }`
 );
+
+export const ABOUT_BY_USERNAME_QUERY = defineQuery(`
+  *[_type == "about" && author->username == $username]{
+    _id,
+    about_description,
+    "author": author->{
+      name,
+      username,
+      email,
+      profile_title,
+      image
+    }
+    }
+  `);

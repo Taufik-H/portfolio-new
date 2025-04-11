@@ -8,7 +8,7 @@ import { formSchema } from "@/lib/validation";
 import { Project } from "@/sanity/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MDEditor from "@uiw/react-md-editor";
-import { X } from "lucide-react";
+import { Eye, PencilRuler, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, type KeyboardEvent } from "react";
@@ -30,6 +30,8 @@ const EditProjectForm = ({ previousData }: { previousData: Project }) => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
   const [categoryInput, setCategoryInput] = useState("");
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+
   const [categories, setCategories] = useState<string[]>(category || []);
   const { username } = useParams();
   console.log(categories.length);
@@ -216,27 +218,58 @@ const EditProjectForm = ({ previousData }: { previousData: Project }) => {
 
       {isClient && (
         <div className="mb-8" data-color-mode={theme || "system"}>
-          <label htmlFor="pitch" className="block text-lg font-bold mb-2">
-            Description <br />
-            <span className="text-xs font-normal italic text-neutral-500">
-              - describe your project down bellow, use markdown format,also you
-              can preview it on the right top of the editor
-            </span>
-          </label>
-          <MDEditor
-            value={pitch}
-            onChange={(value) => setPitch(value as string)}
-            id="pitch"
-            preview="edit"
-            height={300}
-            className={"brutalism-border pressable min-h-40 h-fit"}
-            textareaProps={{
-              placeholder: "Describe your project nicely!",
-            }}
-            previewOptions={{
-              disallowedElements: ["style"],
-            }}
-          />
+          <div className="flex justify-between items-center flex-col md:flex-row w-full">
+            <label
+              htmlFor="pitch"
+              className="block text-lg font-bold mb-2 w-full"
+            >
+              Description <br />
+              <span className="text-xs font-normal italic text-neutral-500 w-full">
+                - describe your project down bellow, use markdown format
+              </span>
+            </label>
+            <div className="flex justify-end mb-2 w-full">
+              <Button
+                type="button"
+                variant="brutalism"
+                className="w-full md:w-fit"
+                onClick={() => setIsPreviewMode(!isPreviewMode)}
+              >
+                {isPreviewMode ? (
+                  <>
+                    <PencilRuler size={20} /> Edit
+                  </>
+                ) : (
+                  <>
+                    <Eye size={20} /> Preview
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* Jika mode preview, tampilkan full preview */}
+          {isPreviewMode ? (
+            <div className="p-4 brutalism-border bg-white dark:bg-gray-900 min-h-[300px]">
+              <MDEditor.Markdown source={pitch} />
+            </div>
+          ) : (
+            <MDEditor
+              value={pitch}
+              onChange={(value) => setPitch(value as string)}
+              id="pitch"
+              height={300}
+              preview="edit"
+              className="brutalism-border pressable min-h-40 h-fit"
+              textareaProps={{
+                placeholder: "Describe your project nicely!",
+              }}
+              previewOptions={{
+                disallowedElements: ["style"],
+              }}
+            />
+          )}
+
           {errors.pitch && (
             <p className="text-red-600 mt-1 font-bold">
               {errors.pitch.message}
@@ -244,7 +277,6 @@ const EditProjectForm = ({ previousData }: { previousData: Project }) => {
           )}
         </div>
       )}
-
       <Button
         type="submit"
         variant={"amber"}

@@ -1,19 +1,29 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { auth } from "@/auth";
+import { buttonVariants } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/enpty-state";
-import { CURRENT_USER_BY_USERNAME } from "@/lib/queries";
+import { ABOUT_BY_USERNAME_QUERY } from "@/lib/queries";
+import { cn } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
+import MarkdownIt from "markdown-it";
+import { Fredoka } from "next/font/google";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import React from "react";
-
+const fredoka = Fredoka({
+  subsets: ["latin"],
+});
 const About = async ({ params }: { params: Promise<{ username: string }> }) => {
   const username = (await params).username;
-  const user = await client
+  const session = await auth();
+  const about = await client
     .withConfig({ useCdn: false })
-    .fetch(CURRENT_USER_BY_USERNAME, {
-      username,
-    });
-  if (!user) return notFound();
+    .fetch(ABOUT_BY_USERNAME_QUERY, { username });
+
+  console.log("about", about);
+
+  // Pastikan data diambil dari array
+  const aboutData = about?.[0];
+  const md = new MarkdownIt();
+  const parsedContent = md.render(aboutData?.about_description || "");
+
   return (
     <div>
       <div className="flex gap-4 items-center my-8 ">
@@ -25,15 +35,29 @@ const About = async ({ params }: { params: Promise<{ username: string }> }) => {
         </Link>
         <h2 className=" font-black  text-center">About</h2>
       </div>
-      <EmptyState
-        currentUser={username}
-        title="No about yet!"
-        description="I am Sorry..."
-        action={{
-          label: "check",
-          href: "#",
-        }}
-      />
+      {aboutData ? ( // Pastikan aboutData ada
+        <div
+          className={cn(
+            fredoka.className,
+            "prose w-full max-w-none break-all dark:prose-neutral dark:prose-headings:text-neutral-50 prose-a:text-amber-500 dark:prose-p:text-white dark:prose-strong:text-white prose-a:decoration-0"
+          )}
+        >
+          <article
+            dangerouslySetInnerHTML={{ __html: parsedContent }}
+            className="w-full"
+          />
+        </div>
+      ) : (
+        <EmptyState
+          currentUser={username}
+          title="No about yet!"
+          description="I am Sorry..."
+          action={{
+            label: "check",
+            href: `/u/${username}/about/${session?.id}/create`,
+          }}
+        />
+      )}
     </div>
   );
 };

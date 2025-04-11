@@ -11,9 +11,11 @@ export default async function Layout({
   params: Promise<{ username: string }>;
 }>) {
   const username = (await params).username;
-  const user = await client.fetch(CURRENT_USER_BY_USERNAME, {
-    username,
-  });
+  const user = await client
+    .withConfig({ useCdn: false })
+    .fetch(CURRENT_USER_BY_USERNAME, {
+      username,
+    });
   if (!user) return notFound();
 
   return (

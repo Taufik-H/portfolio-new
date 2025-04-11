@@ -12,13 +12,15 @@ import { useParams, useRouter } from "next/navigation";
 import { createProject } from "@/lib/actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { X } from "lucide-react";
+import { Eye, PencilRuler, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ProjectForm = () => {
   const [pitch, setPitch] = useState("");
   const { theme } = useTheme();
   const [isClient, setIsClient] = useState(false);
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
+
   const router = useRouter();
   const [categoryInput, setCategoryInput] = useState("");
   const [categories, setCategories] = useState<string[]>([]);
@@ -95,7 +97,7 @@ const ProjectForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex gap-4 items-center mb-8 ">
+      <div className="flex gap-4 items-center my-8 ">
         <Button type="button" onClick={() => router.back()} variant="brutalism">
           Back
         </Button>
@@ -207,27 +209,58 @@ const ProjectForm = () => {
 
       {isClient && (
         <div className="mb-8" data-color-mode={theme || "system"}>
-          <label htmlFor="pitch" className="block text-lg font-bold mb-2">
-            Description <br />
-            <span className="text-xs font-normal italic text-neutral-500">
-              - describe your project down bellow, use markdown format,also you
-              can preview it on the right top of the editor
-            </span>
-          </label>
-          <MDEditor
-            value={pitch}
-            onChange={(value) => setPitch(value as string)}
-            id="pitch"
-            preview="edit"
-            height={300}
-            className={"brutalism-border pressable min-h-40 h-fit"}
-            textareaProps={{
-              placeholder: "Describe your project nicely!",
-            }}
-            previewOptions={{
-              disallowedElements: ["style"],
-            }}
-          />
+          <div className="flex justify-between items-center flex-col md:flex-row w-full">
+            <label
+              htmlFor="pitch"
+              className="block text-lg font-bold mb-2 w-full"
+            >
+              Description <br />
+              <span className="text-xs font-normal italic text-neutral-500 w-full">
+                - describe your project down bellow, use markdown format
+              </span>
+            </label>
+            <div className="flex justify-end mb-2 w-full">
+              <Button
+                type="button"
+                variant="brutalism"
+                className="w-full md:w-fit"
+                onClick={() => setIsPreviewMode(!isPreviewMode)}
+              >
+                {isPreviewMode ? (
+                  <>
+                    <PencilRuler size={20} /> Edit
+                  </>
+                ) : (
+                  <>
+                    <Eye size={20} /> Preview
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+
+          {/* Jika mode preview, tampilkan full preview */}
+          {isPreviewMode ? (
+            <div className="p-4 brutalism-border bg-white dark:bg-gray-900 min-h-[300px]">
+              <MDEditor.Markdown source={pitch} />
+            </div>
+          ) : (
+            <MDEditor
+              value={pitch}
+              onChange={(value) => setPitch(value as string)}
+              id="pitch"
+              height={300}
+              preview="edit"
+              className="brutalism-border pressable min-h-40 h-fit"
+              textareaProps={{
+                placeholder: "Describe your project nicely!",
+              }}
+              previewOptions={{
+                disallowedElements: ["style"],
+              }}
+            />
+          )}
+
           {errors.pitch && (
             <p className="text-red-600 mt-1 font-bold">
               {errors.pitch.message}

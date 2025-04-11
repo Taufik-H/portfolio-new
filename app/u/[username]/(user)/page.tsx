@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import ProjectCard, { ProjectCardType } from "@/components/project-card";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/enpty-state";
+import { Skeleton } from "@/components/ui/skeleton";
 import { CURRENT_USER_BY_USERNAME, PROJECT_BY_USER_QUERY } from "@/lib/queries";
 import { client } from "@/sanity/lib/client";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
@@ -37,11 +38,11 @@ export default async function User({
 
   return (
     <>
-      <Suspense fallback={<p>Loading user data...</p>}>
+      <Suspense fallback={<Skeleton className="rounded-2xl h-10 w-full" />}>
         <UserSkills params={{ username }} />
       </Suspense>
 
-      <Suspense fallback={<p>Loading projects...</p>}>
+      <Suspense fallback={<Skeleton className="rounded-2xl h-60 w-full" />}>
         <UserProjects username={username} query={query} sessionId={sessionId} />
       </Suspense>
 
