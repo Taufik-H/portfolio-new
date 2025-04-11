@@ -177,11 +177,11 @@ export default function EditProfilePage({
 
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="mb-6 text-center">
-        <h1 className="text-3xl font-bold">Edit Your Profile</h1>
-        <p className="text-sm text-muted-foreground">
-          Update your information and customize your profile
-        </p>
+      <div className="flex gap-4 items-center my-8 ">
+        <Button type="button" onClick={() => router.back()} variant="brutalism">
+          Back
+        </Button>
+        <h2 className=" font-black  text-center">Edit Profile</h2>
       </div>
 
       <Form {...form}>
@@ -542,7 +542,7 @@ export default function EditProfilePage({
                 )}
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-[2fr,1fr] gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-[2fr,1fr] lg:grid-cols-2 gap-3">
                 <div>
                   <Label htmlFor="skill" className="text-sm font-medium mb-2">
                     Skill Name
@@ -574,7 +574,6 @@ export default function EditProfilePage({
                   </div>
                 </div>
               </div>
-
               <div className="flex justify-between items-center pt-1">
                 <Button
                   type="button"

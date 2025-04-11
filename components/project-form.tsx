@@ -96,7 +96,7 @@ const ProjectForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex gap-4 items-center mb-8 ">
-        <Button onClick={() => router.back()} variant="brutalism">
+        <Button type="button" onClick={() => router.back()} variant="brutalism">
           Back
         </Button>
         <h2 className=" font-black  text-center">Edit Project</h2>

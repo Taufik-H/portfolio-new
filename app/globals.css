@@ -122,11 +122,11 @@
 
 @layer components {
   .section-container {
-    @apply px-5 max-w-7xl mx-auto;
+    @apply px-5 lg:max-w-6xl  xl:max-w-7xl mx-auto;
   }
 
   .brutalism-border {
-    @apply !border-2 !border-neutral-900 !rounded-lg !p-3 dark:!shadow-neutral-700 dark:!border-neutral-700 !shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] shadow-neutral-900;
+    @apply !border-2 !border-neutral-900 !rounded-lg !p-3 dark:!shadow-neutral-700 dark:!border-neutral-700 !shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] shadow-neutral-900;
   }
   .pressable {
     @apply !transition-all cursor-pointer focus-visible:!ring-0 focus-visible:!ring-offset-0 focus-visible:!translate-y-1 focus-visible:!translate-x-1 focus-visible:!shadow-none focus-visible:!border-2;
@@ -140,7 +140,7 @@
 }
 
 .brutalism-btn {
-  @apply !border-2 !border-neutral-900  !p-3 dark:!shadow-neutral-700  !shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] shadow-neutral-900 cursor-pointer hover:!ring-0 hover:!ring-offset-0 hover:!translate-y-1 hover:!translate-x-1 hover:!shadow-none hover:!border-2;
+  @apply !border-2 !border-neutral-900  !p-3 dark:!shadow-neutral-700  !shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] shadow-neutral-900 cursor-pointer active:!ring-0 active:!ring-offset-0 active:!translate-y-1 active:!translate-x-1 active:!shadow-none active:!border-2 !transition-all !duration-150;
 }
 
 @keyframes fadeIn {

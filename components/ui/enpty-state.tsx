@@ -29,7 +29,7 @@ export async function EmptyState({
   return (
     <div
       className={cn(
-        "w-full py-12 flex flex-col items-center justify-center min-h-100 bg-neutral-100 mt-5 rounded-2xl dark:bg-neutral-900",
+        "w-full py-12 flex flex-col items-center justify-center h-100 bg-neutral-100 mt-5 rounded-2xl dark:bg-neutral-900",
         className
       )}
     >

@@ -135,7 +135,11 @@ const ShareModal = ({
   return isDesktop ? (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={variant ?? "ghost"} className={cn(className)}>
+        <Button
+          variant={variant ?? "ghost"}
+          size={"icon"}
+          className={cn(className)}
+        >
           <Share2 size={20} />
         </Button>
       </DialogTrigger>

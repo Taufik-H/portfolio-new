@@ -63,7 +63,7 @@ export default async function PublicProfile({
               {/* social */}
               <div className="flex"></div>
               {/* button */}
-              <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 pt-4">
+              <div className="flex flex-col md:flex-row md:items-center gap-4 pt-4 w-full lg:w-fit">
                 <Button
                   variant={"amber"}
                   className="rounded-full  brutalism-btn"
@@ -71,22 +71,24 @@ export default async function PublicProfile({
                   get in touch
                 </Button>
                 {_id === session?.id && (
-                  <Link
-                    href={`/u/${username}/edit/profile`}
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "rounded-full brutalism-btn"
+                  <div className="flex gap-6 md:gap-4">
+                    <Link
+                      href={`/u/${username}/edit/profile`}
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "rounded-full brutalism-btn w-10/12 md:w-fit"
+                      )}
+                    >
+                      edit profile
+                    </Link>
+                    {username && (
+                      <ShareModal
+                        username={username}
+                        variant={"brutalism"}
+                        className="rounded-full "
+                      />
                     )}
-                  >
-                    edit profile
-                  </Link>
-                )}
-                {username && (
-                  <ShareModal
-                    username={username}
-                    variant={"brutalism"}
-                    className="rounded-full"
-                  />
+                  </div>
                 )}
               </div>
             </div>
